@@ -20,11 +20,11 @@ public class PlayerAttack : MonoBehaviour {
 			anim.SetTrigger("armHit");
 		}
 	}
-	
+
 	// If the arms collide with something than deal damage and play the sounds effect.
-	void OnCollisionEnter(Collision col){
-		if(col.gameObject.CompareTag("Enemy")){
-			GameObject enemy = col.gameObject;
+	void OnCollisionEnter(Collision collider){
+		if(collider.gameObject.CompareTag("enemy")){
+			GameObject enemy = collider.gameObject;
 			DealDamage(enemy);
 			audio.Play();
 		}
@@ -32,6 +32,7 @@ public class PlayerAttack : MonoBehaviour {
 	
 	// Will talk to the enemy script to deal damage to a specific enemy.	
 	void DealDamage(GameObject enemy){
-		
+		Drone drone = enemy.GetComponent ("Drone") as Drone;
+		drone.getDamage (baseDamage + strength);
 	}
 }

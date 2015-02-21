@@ -4,7 +4,7 @@ using System.Collections;
 public class Drone : MonoBehaviour {
 	public int health;
 	public int moveSpeed;
-	public int attack;
+	public int k;
 	public int searchRange;
 	public float attackRange;
 	
@@ -15,12 +15,10 @@ public class Drone : MonoBehaviour {
 	 */
 	// Use this for initialization
 	void Start () {
-		print ("start");
 		searchRange = 20;
 		generateNewTarget ();
 		this.player = GameObject.FindGameObjectWithTag ("player").transform;
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
-
 		HiveMind.Instance.addDrone(this);
 	}
 	
@@ -86,16 +84,30 @@ public class Drone : MonoBehaviour {
 
 	public void getDamage(int dmg)
 	{
+		print ("here");
 		this.health -= dmg;
 		if(health <= 0)
 		{
-			print ("this drone should be dead, but I haven't implemented it yet");
+			print ("reverse these.... >>>> ?????");
+//			print (HiveMind.Instance.getSize());
+			Destroy(this.gameObject);
+			HiveMind.Instance.removeDrone(this);
+
 		}
 	}
 
 	public void attackPlayer()
 	{
 		print ("attacking the player at some point in the near future");
+	}
+	void OnCollisionStay(Collision col){
+		if(col.gameObject.CompareTag("larm") || col.gameObject.CompareTag("rarm"))
+		{
+			print ("here2");
+			PlayerAttack att = col.gameObject.GetComponent("PlayerAttack") as PlayerAttack;
+			this.getDamage(att.baseDamage + att.strength);
+		}
+
 	}
 }
 
