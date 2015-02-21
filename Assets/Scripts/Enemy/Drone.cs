@@ -38,7 +38,6 @@ public class Drone : MonoBehaviour {
 	}
 
 	public void moveTowardsPlayer(){
-		this.health ++;
 		moveTowards (player);
 	}
 
