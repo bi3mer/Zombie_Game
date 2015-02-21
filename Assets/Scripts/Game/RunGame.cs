@@ -8,4 +8,10 @@ public class RunGame : MonoBehaviour {
 		EventHandler.Instance.init ();
 		StartCoroutine (EventHandler.Instance.spawnWaves ());
 	}
+
+	void Update()
+	{
+		print ("hereasdfaf");
+		HiveMind.Instance.moveDrones();
+	}
 }

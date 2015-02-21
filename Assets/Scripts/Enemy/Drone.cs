@@ -8,22 +8,99 @@ public class Drone : MonoBehaviour {
 	public int searchRange;
 	public float attackRange;
 	
-	private GameObject target;
+	private Vector3 target;
 	private Transform player;
 	/*
-	 * This will all need to be changed to accomodate the static variable idea
+	 * This will need to be altered a bit, to not find the gameobjects with tag.
 	 */
 	// Use this for initialization
 	void Start () {
+		print ("start");
 		searchRange = 20;
-		target = new GameObject();
 		generateNewTarget ();
 		this.player = GameObject.FindGameObjectWithTag ("player").transform;
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
+
+		HiveMind.Instance.addDrone(this);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// search to attack
+		if(   player.position.x+attackRange > transform.position.x && player.position.x - attackRange < transform.position.x
+		   && player.position.y+attackRange > transform.position.y && player.position.y - attackRange < transform.position.y
+		   && player.position.z+attackRange > transform.position.z && player.position.z - attackRange < transform.position.z)
+		{
+			this.attackPlayer();
+		}
+//		moveTowardsPlayer();
+//		moveRandomDirection();	
+	}
+
+	public void moveTowardsPlayer(){
+		moveTowards (player);
+	}
+
+	public void moveRandomDirection(){
+		if(target.x == transform.position.x && target.z == transform.position.z)
+			generateNewTarget ();
+
+		this.GetComponent<NavMeshAgent>().enabled = true;
+		if(this.GetComponent<NavMeshAgent>().pathStatus == NavMeshPathStatus.PathComplete)
+		{
+			this.GetComponent<NavMeshAgent>().SetDestination(this.target);
+		}
+	}
+
+	public void moveTowards(Transform movePlace){
+		if(transform.position.y < 10){ // if component is still in the air, don't find a path
+			print ("here1");
+			this.GetComponent<NavMeshAgent>().enabled = true; // enable navmesh agent
+			if (this.GetComponent<NavMeshAgent> ().pathStatus == NavMeshPathStatus.PathComplete) { // if a path has been found, move. if not do nothing.
+				print ("hi world");
+				this.GetComponent<NavMeshAgent> ().SetDestination (movePlace.position);
+			} else {
+				print ("no path");
+			}
+		}
+	}
+
+	public bool search(){
+		if(player.position.x+searchRange > transform.position.x && player.position.x - searchRange < transform.position.x
+		   && player.position.y+searchRange > transform.position.y && player.position.y - searchRange < transform.position.y
+		   && player.position.z+searchRange > transform.position.z && player.position.z - searchRange < transform.position.z)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public void generateNewTarget(){
+		int walkRadius = 50;
+		Vector3 randomDirection = Random.insideUnitSphere * walkRadius;// will need to be changed
+		NavMeshHit hit;
+		NavMesh.SamplePosition (randomDirection, out hit, walkRadius, 1);
+		Vector3 finalPosition = hit.position;
+		target = finalPosition;
+	}
+
+	public void getDamage(int dmg)
+	{
+		this.health -= dmg;
+		if(health <= 0)
+		{
+			print ("this drone should be dead, but I haven't implemented it yet");
+		}
+	}
+
+	public void attackPlayer()
+	{
+		print ("attacking the player at some point in the near future");
+	}
+}
+
+
+/*
 		if (EventHandler.Instance.getDroneCount () <= 10)
 		{
 			moveTowardsPlayer ();
@@ -52,35 +129,4 @@ public class Drone : MonoBehaviour {
 		//moveRandomDirection();
 
 		//print("Move away: " + EventHandler.Instance.getFound());
-
-		
-	}
-
-	public void moveTowardsPlayer(){
-		moveTowards (player);
-	}
-
-	public void moveRandomDirection(){
-		//if(target.transform.position.x == transform.position.x && target.transform.position.z == transform.position.z)
-			generateNewTarget ();
-		moveTowards (target.transform);
-	}
-
-	public void moveTowards(Transform movePlace){
-		if(transform.position.y < 2){ // if component is still in the air, don't find a path
-			this.GetComponent<NavMeshAgent>().enabled = true; // enable navmesh agent
-			if (this.GetComponent<NavMeshAgent> ().pathStatus == NavMeshPathStatus.PathComplete) { // if a path has been found, move. if not do nothing.
-				this.GetComponent<NavMeshAgent> ().SetDestination (movePlace.position);
-			}
-		}
-	}
-
-	public void generateNewTarget(){
-		int walkRadius = 50;
-		Vector3 randomDirection = Random.insideUnitSphere * walkRadius;// will need to be changed
-		NavMeshHit hit;
-		NavMesh.SamplePosition (randomDirection, out hit, walkRadius, 1);
-		Vector3 finalPosition = hit.position;
-		target.transform.position = finalPosition;
-	}
-}
+		*/

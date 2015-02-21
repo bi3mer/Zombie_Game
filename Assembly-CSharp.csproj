@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Game\EventHandler.cs" />
      <Compile Include="Assets\Scripts\Game\GameTimer.cs" />
      <Compile Include="Assets\Scripts\Game\GlobalVariables.cs" />
+     <Compile Include="Assets\Scripts\Game\HiveMind.cs" />
      <Compile Include="Assets\Scripts\Game\RunGame.cs" />
      <Compile Include="Assets\Scripts\Game\Store.cs" />
      <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
