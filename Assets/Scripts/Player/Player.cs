@@ -9,6 +9,8 @@ using UnityEngine.UI;
 //	Kills?
 public class Player : MonoBehaviour {
 
+	static Transform playerTransform;
+
 	public int maxHealth = 100;
 	public int curHealth = 100;
 	public int rage = 0;
@@ -27,11 +29,12 @@ public class Player : MonoBehaviour {
 
 	void Awake() {
 		controller = this.GetComponent<CharacterMotor>();
+		playerTransform = this.GetComponent<Transform>();
 	}
 	
 	// Use this for initialization
 	void Start () {
-
+		
 	}
 
 	// Update is called once per frame
@@ -39,10 +42,15 @@ public class Player : MonoBehaviour {
 	
 	}
 
-	// Getters and Setters
+// Getters and Setters
 	void setHealth(int health){
 		this.curHealth = health;
 		healthNumber.text = health.ToString();
+	}
+	
+	// Get damage from enemies. Corresponds to enemy script
+	void getDamage(int damage){
+		setHealth(curHealth -= damage);
 	}
 
 	int getHealth(){
