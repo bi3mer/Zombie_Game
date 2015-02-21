@@ -58,11 +58,13 @@ public class EventHandler : MonoBehaviour{
 			int index = Random.Range(0,spawnPoints.Length );
 			if(Random.Range(-10,10) > 0)
 			{ // Melee
-				Instantiate(staticMelee, spawnPoints[index].transform.position, Quaternion.identity);
+				GameObject melee = staticMelee;
+				Instantiate(melee, spawnPoints[index].transform.position, Quaternion.identity);
 			} 
 			else 
 			{ // Ranged
-				Instantiate(staticRanged,spawnPoints[index].transform.position, Quaternion.identity);
+				GameObject ranged = staticRanged;
+				Instantiate(ranged,spawnPoints[index].transform.position, Quaternion.identity);
 				Debug.Log("change Eventhandler.cs spawnwaves() for inclusion of ranged");
 			}
 			droneCount++;
