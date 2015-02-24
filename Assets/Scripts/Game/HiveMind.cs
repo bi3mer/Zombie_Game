@@ -38,7 +38,8 @@ public class HiveMind : MonoBehaviour {
 		}
 	}
 
-	public void moveDrones(){
+	public void moveDrones()
+	{
 		bool found = false;
 		foreach(Drone drone in this.drones)
 		{

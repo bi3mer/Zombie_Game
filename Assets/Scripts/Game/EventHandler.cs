@@ -8,6 +8,7 @@ public class EventHandler : MonoBehaviour{
 
 	public GameObject enemyMelee;
 	public GameObject enemyRanged;
+	public GameObject bullet;
 
 	private bool found;
 	private static GameObject staticMelee;
@@ -34,7 +35,7 @@ public class EventHandler : MonoBehaviour{
 		multiplyNum = 3;
 		staticMelee = enemyMelee;
 		staticRanged = enemyRanged;
-		wave = 10;
+		wave = 1;
 		timeBetweenWaves = 30;
 		droneCount = 0;
 		spawnPoints = GameObject.FindGameObjectsWithTag ("spawner");
@@ -84,51 +85,9 @@ public class EventHandler : MonoBehaviour{
 	public void setFound(bool var){
 		found = var;
 	}
+
+	public int getWave()
+	{
+		return wave;
+	}
 }
-//Time.smoothDeltaTime * 
-//startCoRoutine
-//instantiate
-
-/* old code
-	public static void init(){
-		staticMelee = enemyMelee;
-		staticRanged = enemyRanged;
-		wave = 1;
-		timeBetweenWaves = 30;
-		droneCount = 0;
-		spawnPoints = GameObject.FindGameObjectsWithTag ("spawner");
-	}
-
-	public static void getEventHandler(){
-		EventHandler.droneCount--;
-		if (EventHandler.droneCount == 0) { // start spawn wave sequence
-			EventHandler.waitSpawn();
-		}
-	}
-
-	private static IEnumerator waitSpawn(){
-		yield return new WaitForSeconds (timeBetweenWaves);
-		spawnWaves ();
-
-	}
-	 
-	public static IEnumerator  spawnWaves(){
-		print("here");
-		for (int i = 0; i < wave * multiplyNum; i++) {
-			int index = Random.Range(0,spawnPoints.Length );
-			if(Random.Range(-10,10) > 0)
-			{ // Melee
-
-				Instantiate(staticMelee, spawnPoints[index].transform.position, Quaternion.identity);
-			} 
-			else 
-			{ // Ranged
-				Instantiate(staticRanged,spawnPoints[index].transform.position, Quaternion.identity);
-				Debug.Log("change Eventhandler.cs spawnwaves() for inclusion of ranged");
-			}
-			EventHandler.droneCount++;
-			yield return new WaitForSeconds (spawnDelayTime);
-		}
-		wave++;
-	}
-	*/

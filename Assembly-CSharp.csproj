@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Art\Terrain Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
      <Compile Include="Assets\Scripts\Enemy\Drone.cs" />
+     <Compile Include="Assets\Scripts\Enemy\DroneFire.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyNavigation.cs" />
      <Compile Include="Assets\Scripts\Enemy\MoveSpawner.cs" />
      <Compile Include="Assets\Scripts\GUI\Restarter.cs" />

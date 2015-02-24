@@ -4,21 +4,44 @@ using System.Collections;
 public class Drone : MonoBehaviour {
 	public int health;
 	public int moveSpeed;
-	public int k;
+	//public int k;
 	public int searchRange;
 	public float attackRange;
-	
+
+	private float nextFire; // rate of fire
+	private int walkStop;  // distance till find new move random direction
 	private Vector3 target;
 	private Transform player;
+	private Vector3 bulletSpawn;
 	/*
 	 * This will need to be altered a bit, to not find the gameobjects with tag.
 	 */
 	// Use this for initialization
 	void Start () {
-		searchRange = 20;
+		//print ("change to static player");
 		this.player = GameObject.FindGameObjectWithTag ("player").transform;
 		generateNewTarget ();
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
+
+		// Create drone charecteristics
+		attackRange += Random.Range (2,40);
+		searchRange += Random.Range (5, 10);
+		health 		+= Random.Range (0, 50); // increase scale of model based on health?
+		moveSpeed 	+= Random.Range (0, 5);
+
+		// multiply values based on waves for balancing
+		health 		+= (health      * EventHandler.Instance.getWave() / 5); //5 is magic number for now...
+		moveSpeed 	+= (moveSpeed   + (EventHandler.Instance.getWave()/10));
+
+		this.GetComponent<NavMeshAgent> ().stoppingDistance = attackRange - 1;
+		this.GetComponent<NavMeshAgent> ().speed = moveSpeed;
+
+		walkStop = 5 + (int)attackRange;
+
+		nextFire = 10;
+	
+		// bullet spawn is so the bullets don't spawninside drone
+
 		HiveMind.Instance.addDrone(this);
 	}
 
@@ -40,8 +63,8 @@ public class Drone : MonoBehaviour {
 	}
 
 	public void moveRandomDirection(){
-		if(   target.x > transform.position.x - 2 && target.x < transform.position.x + 2
-		   && target.z > transform.position.z - 2 && target.z < transform.position.z + 2)
+		if(   target.x > transform.position.x - walkStop && target.x < transform.position.x + walkStop
+		   && target.z > transform.position.z - walkStop && target.z < transform.position.z + walkStop)
 		{
 			generateNewTarget ();
 		}
@@ -96,44 +119,15 @@ public class Drone : MonoBehaviour {
 			print ("reverse these.... >>>> ?????");
 			Destroy(this.gameObject);
 			HiveMind.Instance.removeDrone(this);
-
 		}
 	}
 
 	public void attackPlayer()
 	{
-		print ("attacking the player at some point in the near future");
+		if(Time.time > nextFire)
+		{
+			bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1.7f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
+			Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation));
+		}
 	}
 }
-
-
-/*
-		if (EventHandler.Instance.getDroneCount () <= 10)
-		{
-			moveTowardsPlayer ();
-			print("less than 10");
-			return;
-		}
-
-		if(player.position.x+searchRange > transform.position.x && player.position.x - searchRange < transform.position.x
-		   && player.position.y+searchRange > transform.position.y && player.position.y - searchRange < transform.position.y
-		   && player.position.z+searchRange > transform.position.z && player.position.z - searchRange < transform.position.z){
-			//broadcast
-			EventHandler.Instance.setFound(true);
-			moveTowardsPlayer();
-			print("Move towards " + EventHandler.Instance.getFound());
-			return;
-		} else {
-			if(EventHandler.Instance.getFound() == true){
-				moveTowardsPlayer();
-				EventHandler.Instance.setFound(false);
-				return;
-			}
-			EventHandler.Instance.setFound(false);
-		}
-
-		print ("not found");
-		//moveRandomDirection();
-
-		//print("Move away: " + EventHandler.Instance.getFound());
-		*/
