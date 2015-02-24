@@ -40,14 +40,7 @@ public class EventHandler : MonoBehaviour{
 		spawnPoints = GameObject.FindGameObjectsWithTag ("spawner");
 	}
 	
-	public void getEventHandler(){
-		droneCount--;
-		if (droneCount == 0) { // start spawn wave sequence
-			waitSpawn();
-		}
-	}
-	
-	private IEnumerator waitSpawn(){
+	public IEnumerator waitSpawn(){
 		yield return new WaitForSeconds (timeBetweenWaves);
 		spawnWaves ();
 		

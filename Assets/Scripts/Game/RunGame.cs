@@ -11,7 +11,6 @@ public class RunGame : MonoBehaviour {
 
 	void Update()
 	{
-		print ("hereasdfaf");
 		HiveMind.Instance.moveDrones();
 	}
 }

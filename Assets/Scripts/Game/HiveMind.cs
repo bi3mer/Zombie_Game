@@ -32,6 +32,10 @@ public class HiveMind : MonoBehaviour {
 
 	public void removeDrone(Drone drone){
 		this.drones.Remove(drone);
+		if(getSize()<= 0)
+		{
+			StartCoroutine(EventHandler.Instance.waitSpawn());
+		}
 	}
 
 	public void moveDrones(){
@@ -47,7 +51,6 @@ public class HiveMind : MonoBehaviour {
 		{
 			foreach(Drone drone in this.drones)
 			{
-				print ("1");
 				drone.moveTowardsPlayer();
 			}
 		}
@@ -56,9 +59,8 @@ public class HiveMind : MonoBehaviour {
 
 			foreach(Drone drone in this.drones)
 			{
-
-				print("must implement move in random direction");
-				drone.moveTowardsPlayer();
+				//print("must implement move in random direction");
+				drone.moveRandomDirection();
 			}
 		}
 	}
