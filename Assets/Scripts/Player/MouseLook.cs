@@ -29,9 +29,23 @@ public class MouseLook : MonoBehaviour {
 	public float maximumY = 60F;
 
 	float rotationY = 0F;
+	bool cursorLock = true;
+
 
 	void Update ()
 	{
+		
+		// Lock and unlock cursor on screen.
+		if (Input.GetKeyDown(KeyCode.Escape) && cursorLock == true) {
+			Screen.lockCursor = false;
+			cursorLock = false;
+		}
+		
+		if ((Input.GetMouseButtonDown(0) && cursorLock == false) || (Input.GetMouseButtonDown(1) && cursorLock == false)){
+			Screen.lockCursor = true;
+			cursorLock = true;
+		}
+		
 		if (axes == RotationAxes.MouseXAndY)
 		{
 			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
@@ -56,6 +70,7 @@ public class MouseLook : MonoBehaviour {
 	
 	void Start ()
 	{
+		Screen.lockCursor = true;
 		// Make the rigid body not change rotation
 		if (rigidbody)
 			rigidbody.freezeRotation = true;
