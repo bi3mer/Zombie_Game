@@ -6,8 +6,10 @@ public class Drone : MonoBehaviour {
 	public int moveSpeed;
 	//public int k;
 	public int searchRange;
-	public float attackRange;
+	public int attackRange;
+	public int attack;
 
+	private int fireTime;
 	private float nextFire; // rate of fire
 	private int walkStop;  // distance till find new move random direction
 	private Vector3 target;
@@ -24,29 +26,36 @@ public class Drone : MonoBehaviour {
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
 
 		// Create drone charecteristics
-		attackRange += Random.Range (2,40);
+		attackRange += Random.Range (2,20);
 		searchRange += Random.Range (5, 10);
 		health 		+= Random.Range (0, 50); // increase scale of model based on health?
 		moveSpeed 	+= Random.Range (0, 5);
+		attack      += Random.Range (5, 10);
+		attack = 100; // REMOVE THIS ASAP, THIS IS HERE BECAUSE MIKE MADE ME DO IT!!!!!!
 
 		// multiply values based on waves for balancing
 		health 		+= (health      * EventHandler.Instance.getWave() / 5); //5 is magic number for now...
 		moveSpeed 	+= (moveSpeed   + (EventHandler.Instance.getWave()/10));
+		attack      += (attack 		+ (EventHandler.Instance.getWave()/10));
 
 		this.GetComponent<NavMeshAgent> ().stoppingDistance = attackRange - 1;
 		this.GetComponent<NavMeshAgent> ().speed = moveSpeed;
 
-		walkStop = 5 + (int)attackRange;
+		walkStop = 5 + (int)attackRange; 
 
-		nextFire = 10;
+		fireTime = 0;
+		nextFire = 25;
 	
-		// bullet spawn is so the bullets don't spawninside drone
-
+		if(searchRange < attackRange)
+		{
+			searchRange = attackRange + 1;
+		}
 		HiveMind.Instance.addDrone(this);
 	}
 
 	// Update is called once per frame
 	void Update () {
+		fireTime++;
 		// search to attack
 		if(   player.position.x+attackRange > transform.position.x && player.position.x - attackRange < transform.position.x
 		   && player.position.y+attackRange > transform.position.y && player.position.y - attackRange < transform.position.y
@@ -54,8 +63,6 @@ public class Drone : MonoBehaviour {
 		{
 			this.attackPlayer();
 		}
-//		moveTowardsPlayer();
-//		moveRandomDirection();	
 	}
 
 	public void moveTowardsPlayer(){
@@ -124,10 +131,12 @@ public class Drone : MonoBehaviour {
 
 	public void attackPlayer()
 	{
-		if(Time.time > nextFire)
+		if(fireTime > nextFire)
 		{
+			fireTime = 0;
 			bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1.7f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
-			Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation));
+			GameObject bullet = Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation)) as GameObject;
+			bullet.GetComponent<DroneFire>().setDmg(this.attack);
 		}
 	}
 }
