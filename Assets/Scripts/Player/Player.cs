@@ -15,7 +15,6 @@ public class Player : MonoBehaviour {
 	public int curHealth = 100;
 	public int rage = 0;
 	public int stamina = 1;
-	public int dexterity = 1;
 	public int speed = 1;
 	public int strength = 1;
 
@@ -23,18 +22,21 @@ public class Player : MonoBehaviour {
 	public GameObject Larm;
 	public GameObject Rarm;
 	
-	private CharacterMotor controller;	
+	private PlayerController controller;
 	
 	public Text healthNumber;
+	public Text rageNumber;
 
 	void Awake() {
-		controller = this.GetComponent<CharacterMotor>();
+		controller = this.GetComponent<PlayerController>();
 		playerTransform = this.GetComponent<Transform>();
 	}
 	
 	// Use this for initialization
 	void Start () {
-		
+		rage = 100;
+		healthNumber.text = maxHealth.ToString();
+		rageNumber.text = rage.ToString();
 	}
 
 	// Update is called once per frame
@@ -43,6 +45,11 @@ public class Player : MonoBehaviour {
 	}
 
 // Getters and Setters
+	
+	int getHealth(){
+		return curHealth;
+	}
+
 	void setHealth(int health){
 		this.curHealth = health;
 		healthNumber.text = health.ToString();
@@ -51,27 +58,43 @@ public class Player : MonoBehaviour {
 	// Get damage from enemies. Corresponds to enemy script
 	void getDamage(int damage){
 		setHealth(curHealth -= damage);
+		if (curHealth <= 0){
+			Destroy(this.gameObject);
+		}
 	}
 
-	int getHealth(){
-		return curHealth;
+	public int getRage(){
+		return rage;
 	}
-
-	void setRage(int rage){
+	
+	public void setRage(int rage){
 		this.rage = rage;
+		rageNumber.text = rage.ToString();
 	}
-
-	void updateStamina(){
+	
+	// Player Health
+	public int getStamina(){
+		return stamina;
+	}
+	
+	public void setStamina(int stamina){
+		this.stamina = stamina;
 		this.stamina++;
 		this.curHealth += 10;
 		this.maxHealth += 10;
 	}
-
-	void updateSpeed(){
+	
+	// Player Speed
+	public int getSpeed(){
+		return speed;
+	}
+	
+	public void setSpeed(int speed){
+		this.speed = speed;
+		rageNumber.text = speed.ToString();
 		this.speed++;
-		this.speed += 1;
-		controller.movement.maxForwardSpeed += this.speed;
-		controller.movement.maxBackwardsSpeed += this.speed;
-		controller.movement.maxSidewaysSpeed += this.speed;
+		controller.movement.maxForwardSpeed += 1;
+		controller.movement.maxBackwardsSpeed += 1;
+		controller.movement.maxSidewaysSpeed += 1;
 	}
 }
