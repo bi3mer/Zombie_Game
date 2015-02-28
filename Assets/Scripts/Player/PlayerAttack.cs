@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerAttack : MonoBehaviour {
 
 	public int baseDamage = 10;
-	public int strength = 0;
+	public int strength = 1;
 	
 	Animator anim;
 	public Collider col;
@@ -24,6 +24,14 @@ public class PlayerAttack : MonoBehaviour {
 		}
 	}
 
+	public int getStrength(){
+		return this.strength;
+	}
+
+	public void setStrength(int strength){
+		this.strength = strength;
+	}
+
 	// If the arms collide with something than deal damage and play the sounds effect.
 	void OnCollisionEnter(Collision collider){
 		if(collider.gameObject.CompareTag("enemy")){
@@ -36,6 +44,6 @@ public class PlayerAttack : MonoBehaviour {
 	// Will talk to the enemy script to deal damage to a specific enemy.	
 	void DealDamage(GameObject enemy){
 		Drone drone = enemy.GetComponent ("Drone") as Drone;
-		drone.getDamage (baseDamage + strength);
+		drone.getDamage (baseDamage * strength);
 	}
 }
