@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Drone : MonoBehaviour {
@@ -61,7 +61,7 @@ public class Drone : MonoBehaviour {
 		   && player.position.y+attackRange > transform.position.y && player.position.y - attackRange < transform.position.y
 		   && player.position.z+attackRange > transform.position.z && player.position.z - attackRange < transform.position.z)
 		{
-			this.attackPlayer();
+			attackPlayer();
 		}
 	}
 
@@ -104,6 +104,7 @@ public class Drone : MonoBehaviour {
 		   && player.position.y+searchRange > transform.position.y && player.position.y - searchRange < transform.position.y
 		   && player.position.z+searchRange > transform.position.z && player.position.z - searchRange < transform.position.z)
 		{
+			attackPlayer();
 			return true;
 		}
 		return false;
@@ -134,9 +135,31 @@ public class Drone : MonoBehaviour {
 		if(fireTime > nextFire)
 		{
 			fireTime = 0;
-			bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1.7f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
+			bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
 			GameObject bullet = Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation)) as GameObject;
 			bullet.GetComponent<DroneFire>().setDmg(this.attack);
 		}
 	}
 }
+
+
+/*
+ * RaycastHit hit;
+		Ray shotRay = new Ray (transform.position, transform.forward);
+		
+		if (Physics.Raycast (shotRay, out hit, 100)) 	
+		{
+			
+			if(hit.collider.tag == "player")
+			{
+				transform.LookAt (GameObject.FindGameObjectWithTag ("player").transform);
+				print ("hello raycast");
+				rigidbody.velocity = transform.forward * speed;
+				Destroy (gameObject,lifeTime);
+			}
+			
+			
+		}
+	}
+
+*/

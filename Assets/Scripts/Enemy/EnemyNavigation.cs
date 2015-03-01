@@ -14,11 +14,11 @@ public class EnemyNavigation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(transform.position.y < 2){ // if component is still in the air, don't find a path
-			this.GetComponent<NavMeshAgent>().enabled = true; // enable navmesh agent
-			if (this.GetComponent<NavMeshAgent> ().pathStatus == NavMeshPathStatus.PathComplete) { // if a path has been found, move. if not do nothing.
-				this.GetComponent<NavMeshAgent> ().SetDestination (target.position);
-			}
+//		if(transform.position.y < 2){ // if component is still in the air, don't find a path
+		this.GetComponent<NavMeshAgent>().enabled = true; // enable navmesh agent
+		if (this.GetComponent<NavMeshAgent> ().pathStatus == NavMeshPathStatus.PathComplete) { // if a path has been found, move. if not do nothing.
+			this.GetComponent<NavMeshAgent> ().SetDestination (target.position);
 		}
+//		}
 	}
 }

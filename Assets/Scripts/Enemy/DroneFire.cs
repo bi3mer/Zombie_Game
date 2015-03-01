@@ -4,13 +4,17 @@ using System.Collections;
 public class DroneFire : MonoBehaviour {
 	public int lifeTime;
 	public int speed;
-
 	private int damage;
 	// Use this for initialization
 	void Start () 
 	{
 		transform.LookAt (GameObject.FindGameObjectWithTag ("player").transform);
 		//print ("change to static player"); 
+
+		// raycast check
+
+
+		// if succesful move bullet
 		rigidbody.velocity = transform.forward * speed;
 		Destroy (gameObject,lifeTime);
 
