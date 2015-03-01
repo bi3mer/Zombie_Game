@@ -18,7 +18,7 @@ public class Store : MonoBehaviour {
 	public State state;
 	
 	public enum State{
-		Stamina, Strength, Speed
+		Stamina, Strength, Speed, Health, Damage
 	}
 		
 	void Start(){
@@ -42,25 +42,42 @@ public class Store : MonoBehaviour {
 	void OnMouseDown() {
 		int curRage = PlayerVars.getRage();
 		if(business && curRage >= cost){
-			//audio.PlayOneShot(sound);
+			//audio.PlayOneShot(soußßßnd);
 			PlayerVars.setRage(curRage - cost);
 			cost = (int)(Mathf.Floor(cost * 1.5f));
 			
 			switch(state){
 			case State.Strength:
 				print("Strength");
+				PlayerVars.incStrength ();
+				cost = (int)(Mathf.Floor(cost * 1.5f));
 				break;
 				
 			case State.Stamina:
+				PlayerVars.incStamina();
 				print("Stamina");
+				cost = (int)(Mathf.Floor(cost * 1.5f));
 				break;
 		
 			case State.Speed:
 				print("Speed");
+				PlayerVars.incSpeed();
+				cost = (int)(Mathf.Floor(cost * 1.5f));
 				break;
 			
+			case State.Health:
+				PlayerVars.repHealth();
+				print("Heath");
+				break;
+
+			case State.Damage:
+				PlayerVars.getDamage(10);
+				print("Damage");
+				break;
+
 			default:
 				print("Default");
+
 				break;
 			}
 		}

@@ -9,27 +9,33 @@ using UnityEngine.UI;
 //	Kills?
 public class Player : MonoBehaviour {
 
-	static Transform playerTransform;
+	public static Transform transform;
 
 	public int maxHealth = 100;
 	public int curHealth = 100;
 	public int rage = 0;
 	public int stamina = 1;
-	public int speed = 1;
+	public int speed = 12;
+	public float jump = 4;
 	public int strength = 1;
 
 	public int damage = 10;
 	public GameObject Larm;
 	public GameObject Rarm;
 	
-	private PlayerController controller;
+	private RigidbodyFPS controller;
+	private PlayerAttack attack1;
+	private PlayerAttack attack2;
+
 	
 	public Text healthNumber;
 	public Text rageNumber;
 
 	void Awake() {
-		controller = this.GetComponent<PlayerController>();
-		playerTransform = this.GetComponent<Transform>();
+		transform = gameObject.GetComponent<Transform>();
+		attack1 = Larm.GetComponent<PlayerAttack>();
+		attack2 = Rarm.GetComponent<PlayerAttack>();
+		controller = this.GetComponent<RigidbodyFPS>();
 	}
 	
 	// Use this for initialization
@@ -45,24 +51,17 @@ public class Player : MonoBehaviour {
 	}
 
 // Getters and Setters
-	
-	int getHealth(){
-		return curHealth;
-	}
 
-	void setHealth(int health){
-		this.curHealth = health;
-		healthNumber.text = health.ToString();
-	}
-	
-	// Get damage from enemies. Corresponds to enemy script
-	void getDamage(int damage){
+
+	// === DAMAGE ===
+	public void getDamage(int damage){
 		setHealth(curHealth -= damage);
 		if (curHealth <= 0){
 			Destroy(this.gameObject);
 		}
 	}
 
+	// === RAGE ===
 	public int getRage(){
 		return rage;
 	}
@@ -71,30 +70,52 @@ public class Player : MonoBehaviour {
 		this.rage = rage;
 		rageNumber.text = rage.ToString();
 	}
-	
-	// Player Health
+
+	// === HEALTH ===
+	int getHealth(){
+		return curHealth;
+	}
+
+	void setHealth(int health){
+		this.curHealth = health;
+		healthNumber.text = health.ToString();
+	}
+
+	public void repHealth(){
+		this.setHealth(maxHealth);
+	}
+
+	// === Player Stamina ===
 	public int getStamina(){
 		return stamina;
 	}
 	
-	public void setStamina(int stamina){
-		this.stamina = stamina;
+	public void incStamina(){
 		this.stamina++;
-		this.curHealth += 10;
+		this.setHealth (curHealth + 10);
 		this.maxHealth += 10;
 	}
+
+	// === Player Strength ===
+	public void incStrength(){
+		attack1.setStrength(attack1.getStrength() + 1);
+		attack2.setStrength(attack2.getStrength() + 1);
+		print("Strength: " + attack1.getStrength());
+	}
 	
-	// Player Speed
+	// === Player Speed ===
 	public int getSpeed(){
 		return speed;
 	}
 	
-	public void setSpeed(int speed){
-		this.speed = speed;
-		rageNumber.text = speed.ToString();
-		this.speed++;
-		controller.movement.maxForwardSpeed += 1;
-		controller.movement.maxBackwardsSpeed += 1;
-		controller.movement.maxSidewaysSpeed += 1;
+	public void incSpeed(){
+		this.speed ++;
+		this.jump += .2f;
+		controller.runSpeed = this.speed;
+		controller.runBackwardSpeed = this.speed;
+		controller.runSidestepSpeed = this.speed;
+		controller.jumpHeight = this.jump;
+		print ("Speed: " + this.speed);
+		print ("Jump: " + this.jump);
 	}
 }

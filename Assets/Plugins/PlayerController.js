@@ -47,9 +47,9 @@ function OnCollisionStay ( colInfo : Collision )
 
 class S_CharacterMotorMovement {
 	// The maximum horizontal speed when moving
-	var maxForwardSpeed : float = 10.0;
-	var maxSidewaysSpeed : float = 10.0;
-	var maxBackwardsSpeed : float = 10.0;
+	public var maxForwardSpeed : float = 10.0;
+	public var maxSidewaysSpeed : float = 10.0;
+	public var maxBackwardsSpeed : float = 10.0;
 	
 	// How much control does the character have in the air? 0 = none, 1 = full.
 	var airControlAmt : float = 0.5 ;
@@ -415,10 +415,6 @@ private function AdjustGroundVelocityToNormal (hVelocity : Vector3, groundNormal
 	return Vector3.Cross(sideways, groundNormal).normalized * hVelocity.magnitude;
 }
 
-private function IsGroundedTest () {
-	return (groundNormal.y > 0.01);
-}
-
 function GetMaxAcceleration (grounded : boolean) : float {
 	// Maximum acceleration on ground and in air
 	if (grounded)
@@ -439,10 +435,6 @@ function IsJumping () {
 
 function IsTouchingCeiling () {
 	return (movement.collisionFlags & CollisionFlags.CollidedAbove) != 0;
-}
-
-function IsGrounded () {
-	return grounded;
 }
 
 function TooSteep () {
