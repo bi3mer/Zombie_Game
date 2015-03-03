@@ -8,17 +8,9 @@ public class DroneFire : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		transform.LookAt (GameObject.FindGameObjectWithTag ("player").transform);
-		//print ("change to static player"); 
-
-		// raycast check
-
-
-		// if succesful move bullet
+		transform.LookAt (Player.transform);
 		rigidbody.velocity = transform.forward * speed;
 		Destroy (gameObject,lifeTime);
-
-		// damage = 0;
 	}
 
 	public void setDmg(int dmg)
@@ -30,13 +22,13 @@ public class DroneFire : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "player") 
 		{
-			// do dmg to player
-			print ("do dmg to player!!!!!! " + damage);
-			Destroy (this.gameObject);
+			other.gameObject.GetComponent<Player>().getDamage(damage);   // deal damage to player
+			Destroy (this.gameObject); // destroy self
 		}
 		else if(other.gameObject.tag == "envr")
 		{
-			Destroy(this.gameObject);
+			Destroy(this.gameObject); //destroy self
 		}
+		// nothing is done if a drone hits another drone.
 	}
 }

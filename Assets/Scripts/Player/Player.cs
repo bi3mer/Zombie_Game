@@ -57,7 +57,10 @@ public class Player : MonoBehaviour {
 	public void getDamage(int damage){
 		setHealth(curHealth -= damage);
 		if (curHealth <= 0){
-			Destroy(this.gameObject);
+			Application.OpenURL ("http://goo.gl/forms/57PiUcOHVf"); // open url at end of game
+			Application.Quit(); // this should be changed later on
+			//Destroy(this.gameObject); // this command is bad
+			Debug.Break();
 		}
 	}
 

@@ -35,19 +35,25 @@ public class EventHandler : MonoBehaviour{
 		multiplyNum = 3;
 		staticMelee = enemyMelee;
 		staticRanged = enemyRanged;
-		wave = 20;
-		timeBetweenWaves = 30;
+		wave = 1;
+		timeBetweenWaves = 15;
 		droneCount = 0;
 		spawnPoints = GameObject.FindGameObjectsWithTag ("spawner");
 	}
-	
+
+	public GameObject[] getSpawnPoints()
+	{
+		return spawnPoints;
+	}
+
 	public IEnumerator waitSpawn(){
 		yield return new WaitForSeconds (timeBetweenWaves);
-		spawnWaves ();
+		StartCoroutine(spawnWaves ());
 		
 	}
 	
 	public IEnumerator  spawnWaves(){
+		print ("spawn: " + this.getWave ());
 		for (int i = 0; i < wave * multiplyNum; i++) {
 			int index = Random.Range(0,spawnPoints.Length );
 			if(Random.Range(-10,10) > 0)

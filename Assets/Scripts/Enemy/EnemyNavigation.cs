@@ -8,7 +8,7 @@ public class EnemyNavigation : MonoBehaviour {
 	 */
 	// Use this for initialization
 	void Start () {
-		this.target = GameObject.FindGameObjectWithTag ("player").transform;
+		this.target = Player.transform;
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
 	}
 	

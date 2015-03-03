@@ -40,6 +40,14 @@ public class HiveMind : MonoBehaviour {
 
 	public void moveDrones()
 	{
+		if(this.drones.Count < 10)
+		{
+			foreach(Drone drone in this.drones)
+			{
+				drone.moveTowardsPlayer();
+			}
+			return;
+		}
 		bool found = false;
 		foreach(Drone drone in this.drones)
 		{

@@ -19,10 +19,10 @@ public class Drone : MonoBehaviour {
 	 * This will need to be altered a bit, to not find the gameobjects with tag.
 	 */
 	// Use this for initialization
-	void Start () {
-		//print ("change to static player");
-		this.player = GameObject.FindGameObjectWithTag ("player").transform;
-		generateNewTarget ();
+	void Start () 
+	{
+		this.player = Player.transform; 
+		generateNewTarget (); // generate point on map to move to, if player is not visible.
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
 
 		// Create drone charecteristics
@@ -30,13 +30,12 @@ public class Drone : MonoBehaviour {
 		searchRange += Random.Range (5, 10);
 		health 		+= Random.Range (0, 50); // increase scale of model based on health?
 		moveSpeed 	+= Random.Range (0, 5);
-		attack      += Random.Range (5, 10);
-		attack = 100; // REMOVE THIS ASAP, THIS IS HERE BECAUSE MIKE MADE ME DO IT!!!!!!
+		attack      += Random.Range (1, 5);
 
 		// multiply values based on waves for balancing
-		health 		+= (health      * EventHandler.Instance.getWave() / 5); //5 is magic number for now...
-		moveSpeed 	+= (moveSpeed   + (EventHandler.Instance.getWave()/10));
-		attack      += (attack 		+ (EventHandler.Instance.getWave()/10));
+		health 		+= (health      * EventHandler.Instance.getWave() / 5);  //magic numbers in here for now. will balance later
+		moveSpeed   += (moveSpeed + (EventHandler.Instance.getWave () / 10));
+		//attack      += (attack 		+ (EventHandler.Instance.getWave()/10));
 
 		this.GetComponent<NavMeshAgent> ().stoppingDistance = attackRange - 1;
 		this.GetComponent<NavMeshAgent> ().speed = moveSpeed;
@@ -45,7 +44,6 @@ public class Drone : MonoBehaviour {
 
 		fireTime = 0;
 		nextFire = 25;
-	
 		if(searchRange < attackRange)
 		{
 			searchRange = attackRange + 1;
@@ -54,7 +52,8 @@ public class Drone : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		fireTime++;
 		// search to attack
 		if(   player.position.x+attackRange > transform.position.x && player.position.x - attackRange < transform.position.x
@@ -69,7 +68,8 @@ public class Drone : MonoBehaviour {
 		moveTowards (player);
 	}
 
-	public void moveRandomDirection(){
+	public void moveRandomDirection()
+	{
 		if(   target.x > transform.position.x - walkStop && target.x < transform.position.x + walkStop
 		   && target.z > transform.position.z - walkStop && target.z < transform.position.z + walkStop)
 		{
@@ -77,9 +77,13 @@ public class Drone : MonoBehaviour {
 		}
 
 
-		if(this.GetComponent<NavMeshAgent>().enabled == false && transform.position.y < 10)
+		if(this.GetComponent<NavMeshAgent>().enabled == false )//&& transform.position.y < 10
 		{
 			this.GetComponent<NavMeshAgent>().enabled = true;
+			if(this.GetComponent<NavMeshAgent>().pathStatus != NavMeshPathStatus.PathComplete)
+			{
+				this.GetComponent<NavMeshAgent>().enabled = false;
+			}
 		}
 
 		if(this.GetComponent<NavMeshAgent>().pathStatus == NavMeshPathStatus.PathComplete)
@@ -89,7 +93,8 @@ public class Drone : MonoBehaviour {
 	
 	}
 
-	public void moveTowards(Transform movePlace){
+	public void moveTowards(Transform movePlace)
+	{
 		if(transform.position.y < 10){ // if component is still in the air, don't find a path
 			this.GetComponent<NavMeshAgent>().enabled = true; // enable navmesh agent
 			if (this.GetComponent<NavMeshAgent> ().pathStatus == NavMeshPathStatus.PathComplete) 
@@ -99,7 +104,8 @@ public class Drone : MonoBehaviour {
 		}
 	}
 
-	public bool search(){
+	public bool search()
+	{
 		if(   player.position.x+searchRange > transform.position.x && player.position.x - searchRange < transform.position.x
 		   && player.position.y+searchRange > transform.position.y && player.position.y - searchRange < transform.position.y
 		   && player.position.z+searchRange > transform.position.z && player.position.z - searchRange < transform.position.z)
@@ -110,7 +116,8 @@ public class Drone : MonoBehaviour {
 		return false;
 	}
 
-	public void generateNewTarget(){
+	public void generateNewTarget()
+	{
 		int walkRadius = 1000;
 		Vector3 randomDirection = Random.insideUnitSphere * walkRadius;// will need to be changed
 		NavMeshHit hit;
@@ -122,17 +129,16 @@ public class Drone : MonoBehaviour {
 	public void getDamage(int dmg)
 	{
 		this.health -= dmg;
-		if(health <= 0)
+		if(health <= 0) // check if killed
 		{
-			print ("reverse these.... >>>> ?????");
-			Destroy(this.gameObject);
-			HiveMind.Instance.removeDrone(this);
+			HiveMind.Instance.removeDrone(this); // remove drone from hivemind
+			Destroy(this.gameObject);            // delete self
 		}
 	}
 
 	public void attackPlayer()
 	{
-		if(fireTime > nextFire)
+		if(fireTime > nextFire) // limits how fast the player can attack
 		{
 			fireTime = 0;
 			bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z); // this y+1 will need to be changed to be dynamic

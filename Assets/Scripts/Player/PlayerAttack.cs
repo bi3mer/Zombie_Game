@@ -37,7 +37,7 @@ public class PlayerAttack : MonoBehaviour {
 		if(collider.gameObject.CompareTag("enemy")){
 			GameObject enemy = collider.gameObject;
 			DealDamage(enemy);
-			audio.Play();
+			//audio.Play();
 		}
 	}
 	
