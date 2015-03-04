@@ -8,7 +8,11 @@ public class PlayerAttack : MonoBehaviour {
 	
 	Animator anim;
 	public Collider col;
-
+	
+	public int button = 0;
+	
+	public AudioClip zombieNoise;
+	
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
@@ -16,11 +20,9 @@ public class PlayerAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(1) && gameObject.tag == "rarm") {
+		if (Input.GetMouseButtonDown(button)) {
 			anim.SetTrigger("armHit");
-		}
-		if (Input.GetMouseButtonDown(0) && gameObject.tag == "larm") {
-			anim.SetTrigger("armHit");
+			audio.PlayOneShot(zombieNoise, 1.0F);
 		}
 	}
 
@@ -37,7 +39,6 @@ public class PlayerAttack : MonoBehaviour {
 		if(collider.gameObject.CompareTag("enemy")){
 			GameObject enemy = collider.gameObject;
 			DealDamage(enemy);
-			//audio.Play();
 		}
 	}
 	

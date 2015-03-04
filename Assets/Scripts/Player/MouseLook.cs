@@ -29,7 +29,7 @@ public class MouseLook : MonoBehaviour {
 	public float maximumY = 60F;
 
 	float rotationY = 0F;
-	bool cursorLock = true;
+	bool cursorLock = false;
 
 
 	void Update ()

@@ -8,6 +8,7 @@ public class Store : MonoBehaviour {
  
 	//public Audioclip sound; 
 	public int cost = 10;
+	private int curRage;
  
 	Player PlayerVars;
  
@@ -17,8 +18,10 @@ public class Store : MonoBehaviour {
 	
 	public State state;
 	
+	public AudioClip buyNoise;
+	
 	public enum State{
-		Stamina, Strength, Speed, Health, Damage
+		Stamina, Strength, Speed, Health, Damage, INFO
 	}
 		
 	void Start(){
@@ -30,6 +33,7 @@ public class Store : MonoBehaviour {
 		if (Vector3.Distance(Camera.main.gameObject.transform.position, gameObject.transform.position) < 10f) {
 			startcolor = renderer.material;
 			renderer.material = hovercolor;
+			curRage = PlayerVars.getRage();
 			business = true;
 		}
 	}
@@ -40,29 +44,25 @@ public class Store : MonoBehaviour {
 	}
 	
 	void OnMouseDown() {
-		int curRage = PlayerVars.getRage();
 		if(business && curRage >= cost){
-			//audio.PlayOneShot(soußßßnd);
-			PlayerVars.setRage(curRage - cost);
-			cost = (int)(Mathf.Floor(cost * 1.5f));
 			
 			switch(state){
 			case State.Strength:
 				print("Strength");
-				PlayerVars.incStrength ();
-				cost = (int)(Mathf.Floor(cost * 1.5f));
+				PlayerVars.incStrength();
+				buy();
 				break;
 				
 			case State.Stamina:
 				PlayerVars.incStamina();
 				print("Stamina");
-				cost = (int)(Mathf.Floor(cost * 1.5f));
+				buy();
 				break;
 		
 			case State.Speed:
 				print("Speed");
 				PlayerVars.incSpeed();
-				cost = (int)(Mathf.Floor(cost * 1.5f));
+				buy();
 				break;
 			
 			case State.Health:
@@ -75,11 +75,26 @@ public class Store : MonoBehaviour {
 				print("Damage");
 				break;
 
+			case State.INFO:	
+				print("-=INFO=-");
+				print("CURRENT RAGE: " + curRage);
+				break;
+				
 			default:
 				print("Default");
-
+				print("CURRENT RAGE: " + curRage);
 				break;
 			}
 		}
+	}
+	
+	void buy(){
+		cost = (int)(Mathf.Floor(cost * 1.5f));
+		curRage = curRage - cost;
+		PlayerVars.setRage(curRage);
+		audio.PlayOneShot(buyNoise, 0.1F);
+		print(curRage);
+		if (curRage < 0)
+			PlayerVars.setRage(0);
 	}
 }

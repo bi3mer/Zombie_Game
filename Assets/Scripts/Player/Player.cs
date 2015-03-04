@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	public int maxHealth = 100;
 	public int curHealth = 100;
 	public int rage = 0;
+	public int rageIncOnHit = 5;
 	public int stamina = 1;
 	public int speed = 12;
 	public float jump = 4;
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour {
 	private RigidbodyFPS controller;
 	private PlayerAttack attack1;
 	private PlayerAttack attack2;
+
+	public AudioClip deathNoise;
+	public AudioClip getHitNoise;
 
 	
 	public Text healthNumber;
@@ -56,13 +60,28 @@ public class Player : MonoBehaviour {
 	// === DAMAGE ===
 	public void getDamage(int damage){
 		setHealth(curHealth -= damage);
+		print("Current Health: " + curHealth);
 		if (curHealth <= 0){
-			Application.OpenURL ("http://goo.gl/forms/57PiUcOHVf"); // open url at end of game
-			Application.Quit(); // this should be changed later on
-			//Destroy(this.gameObject); // this command is bad
-			Debug.Break();
+			audio.PlayOneShot(deathNoise, 0.7F);
+			gameObject.transform.Rotate(Vector3.up * Time.deltaTime, Space.World);
+			StartCoroutine(MyCoroutine());
+		} else {
+			incRage(rageIncOnHit);
+			audio.PlayOneShot(getHitNoise, 0.7F);
 		}
 	}
+	
+	IEnumerator MyCoroutine()
+    {
+		print("Waiting");
+        yield return new WaitForSeconds(1);
+		Application.OpenURL ("http://goo.gl/forms/57PiUcOHVf"); // open url at end of game
+		Application.Quit(); // this should be changed later on
+		//Destroy(this.gameObject); // this command is bad
+		Debug.Break();
+		print("Waited");
+
+    }
 
 	// === RAGE ===
 	public int getRage(){
@@ -71,7 +90,12 @@ public class Player : MonoBehaviour {
 	
 	public void setRage(int rage){
 		this.rage = rage;
-		rageNumber.text = rage.ToString();
+		rageNumber.text = this.rage.ToString();
+	}
+	
+	public void incRage(int rage){
+		this.rage += rage;
+		rageNumber.text = this.rage.ToString();
 	}
 
 	// === HEALTH ===
