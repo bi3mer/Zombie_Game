@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using AssemblyCSharp;
 
 public class HiveMind : MonoBehaviour {
 	/*
@@ -26,11 +27,11 @@ public class HiveMind : MonoBehaviour {
 		return this.drones.Count;
 	}
 
-	public void addDrone(Drone drone){
+	public void addDrone(DroneAbstract drone){
 		this.drones.Add(drone);
 	}
 
-	public void removeDrone(Drone drone){
+	public void removeDrone(DroneAbstract drone){
 		this.drones.Remove(drone);
 		if(getSize()<= 0)
 		{
@@ -42,14 +43,14 @@ public class HiveMind : MonoBehaviour {
 	{
 		if(this.drones.Count < 10)
 		{
-			foreach(Drone drone in this.drones)
+			foreach(DroneAbstract drone in this.drones)
 			{
 				drone.moveTowardsPlayer();
 			}
 			return;
 		}
 		bool found = false;
-		foreach(Drone drone in this.drones)
+		foreach(DroneAbstract drone in this.drones)
 		{
 			if(drone.search())
 			{
@@ -58,7 +59,7 @@ public class HiveMind : MonoBehaviour {
 		}
 		if(found)
 		{
-			foreach(Drone drone in this.drones)
+			foreach(DroneAbstract drone in this.drones)
 			{
 				drone.moveTowardsPlayer();
 			}

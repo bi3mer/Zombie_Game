@@ -8,11 +8,13 @@ public class EventHandler : MonoBehaviour{
 
 	public GameObject enemyMelee;
 	public GameObject enemyRanged;
+	public GameObject enemyPush;
 	public GameObject bullet;
 
 	private bool found;
 	private static GameObject staticMelee;
 	private static GameObject staticRanged;
+	private static GameObject staticPush;
 	private static int wave;
 	private static int timeBetweenWaves;
 	private static int droneCount;
@@ -22,7 +24,8 @@ public class EventHandler : MonoBehaviour{
 
 	public static EventHandler Instance{
 		get{
-			if(instance == null){
+			if(instance == null)
+			{
 				instance = GameObject.FindObjectOfType<EventHandler>();
 				DontDestroyOnLoad(instance.gameObject);
 			}
@@ -35,6 +38,7 @@ public class EventHandler : MonoBehaviour{
 		multiplyNum = 3;
 		staticMelee = enemyMelee;
 		staticRanged = enemyRanged;
+		staticPush = enemyPush;
 		wave = 1;
 		timeBetweenWaves = 15;
 		droneCount = 0;
@@ -56,14 +60,20 @@ public class EventHandler : MonoBehaviour{
 		print ("spawn: " + this.getWave ());
 		for (int i = 0; i < wave * multiplyNum; i++) {
 			int index = Random.Range(0,spawnPoints.Length );
-			if(Random.Range(-10,10) > 0)
+			int rand = Random.Range(-10,10);
+			if(rand > 4)
 			{ // Melee
 				GameObject melee = staticMelee;
 				Instantiate(melee, spawnPoints[index].transform.position, Quaternion.identity);
 			} 
-			else 
+			else if(rand > -3)
+			{
+				GameObject push = staticRanged;
+				Instantiate (push,spawnPoints[index].transform.position,Quaternion.identity);
+			}
+			else
 			{ // Ranged
-				GameObject ranged = staticRanged;
+				GameObject ranged = staticPush;
 				Instantiate(ranged,spawnPoints[index].transform.position, Quaternion.identity);
 				Debug.Log("change Eventhandler.cs spawnwaves() for inclusion of ranged");
 			}
