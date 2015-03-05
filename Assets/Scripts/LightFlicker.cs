@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Tamer/General/lightFlicker")]
+
 [RequireComponent(typeof(Light))]
 
 public class LightFlicker : MonoBehaviour {

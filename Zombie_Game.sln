@@ -5,6 +5,8 @@ Project("{2FD2A4ED-3569-F5FA-9480-37435531080C}") = "Zombie_Game", "Assembly-CSh
 EndProject
 Project("{2FD2A4ED-3569-F5FA-9480-37435531080C}") = "Zombie_Game", "Assembly-UnityScript-firstpass.unityproj", "{1F4EA983-FB2E-7812-EF43-9F4A49FD4A80}"
 EndProject
+Project("{2FD2A4ED-3569-F5FA-9480-37435531080C}") = "Zombie_Game", "Assembly-UnityScript.unityproj", "{543B4C17-3043-E6F6-0569-C5D4914D3CDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +21,15 @@ Global
 		{1F4EA983-FB2E-7812-EF43-9F4A49FD4A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F4EA983-FB2E-7812-EF43-9F4A49FD4A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F4EA983-FB2E-7812-EF43-9F4A49FD4A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543B4C17-3043-E6F6-0569-C5D4914D3CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543B4C17-3043-E6F6-0569-C5D4914D3CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543B4C17-3043-E6F6-0569-C5D4914D3CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543B4C17-3043-E6F6-0569-C5D4914D3CDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																										GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																														GlobalSection(MonoDevelopProperties) = preSolution
 =======
 																																																																																																																											GlobalSection(MonoDevelopProperties) = preSolution
 >>>>>>> FETCH_HEAD
