@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Game\EventHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerAttack.cs">
     <Files>
-      <File FileName="Assets\Scripts\Enemy\Drone.cs" Line="84" Column="53" />
+      <File FileName="Assets\DronePush.cs" Line="31" Column="49" />
+      <File FileName="Assets\Scripts\Enemy\Drone.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemy\EnemyNavigation.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemy\MoveSpawner.cs" Line="1" Column="1" />
@@ -11,6 +12,7 @@
       <File FileName="Assets\Scripts\Game\EventHandler.cs" Line="45" Column="3" />
       <File FileName="Assets\Scripts\Game\GameTimer.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Game\HiveMind.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy\DroneAbstract.cs" Line="83" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
