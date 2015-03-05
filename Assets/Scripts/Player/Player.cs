@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
 	public static Transform transform;
+	public static Player instance;
 
 	public int maxHealth = 100;
 	public int curHealth = 100;
@@ -34,29 +35,23 @@ public class Player : MonoBehaviour {
 	
 	public Text healthNumber;
 	public Text rageNumber;
-
-	void Awake() {
+	
+// Use this for initialization
+	void Start () {
+		instance = this;
 		transform = gameObject.GetComponent<Transform>();
 		attack1 = Larm.GetComponent<PlayerAttack>();
 		attack2 = Rarm.GetComponent<PlayerAttack>();
 		controller = this.GetComponent<RigidbodyFPS>();
-	}
-	
-	// Use this for initialization
-	void Start () {
 		rage = 100;
 		healthNumber.text = maxHealth.ToString();
 		rageNumber.text = rage.ToString();
 	}
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 // Getters and Setters
 
-
+	// Invoke instead of 
+	// 
 	// === DAMAGE ===
 	public void getDamage(int damage){
 		setHealth(curHealth -= damage);
@@ -64,14 +59,14 @@ public class Player : MonoBehaviour {
 		if (curHealth <= 0){
 			audio.PlayOneShot(deathNoise, 0.7F);
 			gameObject.transform.Rotate(Vector3.up * Time.deltaTime, Space.World);
-			StartCoroutine(MyCoroutine());
+			StartCoroutine(EndGameCor());
 		} else {
 			incRage(rageIncOnHit);
 			audio.PlayOneShot(getHitNoise, 0.7F);
 		}
 	}
 	
-	IEnumerator MyCoroutine()
+	IEnumerator EndGameCor()
     {
 		print("Waiting");
         yield return new WaitForSeconds(1);
@@ -82,6 +77,10 @@ public class Player : MonoBehaviour {
 		print("Waited");
 
     }
+	
+	public static Player getPlayer(){
+		return instance;
+	}
 
 	// === RAGE ===
 	public int getRage(){
