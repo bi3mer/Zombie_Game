@@ -22,6 +22,7 @@ public class DronePush : DroneAbstract {
 		player = Player.transform;
 
 		HiveMind.Instance.addDrone(this);
+		this.checkSelf ();
 	}
 
 	void OnCollisionEnter (Collision col)

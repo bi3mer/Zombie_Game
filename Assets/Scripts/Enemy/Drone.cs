@@ -23,7 +23,7 @@ public class Drone : DroneAbstract {
 		attackRange += Random.Range (2,20);
 		searchRange += Random.Range (5, 10);
 		health 		+= Random.Range (0, 50); // increase scale of model based on health?
-		moveSpeed 	+= Random.Range (0, 5);
+		moveSpeed 	+= Random.Range (2, 10);
 		attack      += Random.Range (1, 5);
 
 		// multiply values based on waves for balancing
@@ -41,8 +41,9 @@ public class Drone : DroneAbstract {
 		if(searchRange < attackRange)
 		{
 			searchRange = attackRange + 1;
-		}
-		HiveMind.Instance.addDrone(this);
+		} 
+		this.addToHive ();
+		this.checkSelf ();
 	}
 
 	// Update is called once per frame

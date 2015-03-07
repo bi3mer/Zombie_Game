@@ -15,6 +15,13 @@ namespace AssemblyCSharp
 		protected Transform player;
 		protected Vector3 bulletSpawn;
 
+		private Vector3 previousPos;
+
+		public void addToHive()
+		{
+			HiveMind.Instance.addDrone (this);		
+		}
+
 		public bool search ()
 		{
 			if(   player.position.x+searchRange > transform.position.x && player.position.x - searchRange < transform.position.x
@@ -24,6 +31,29 @@ namespace AssemblyCSharp
 				return true;
 			}		
 			return false;
+		}
+
+		public void updatePreviousPosition()
+		{
+			this.previousPos = new Vector3(this.transform.position.x,this.transform.position.y,this.transform.position.z);	
+		}
+
+		public void checkSelf()
+		{
+			this.updatePreviousPosition ();
+			InvokeRepeating ("checkPos", 10, 10);		
+		}
+
+		public void checkPos()
+		{
+			if(  (previousPos.x > this.transform.position.x - 3 && previousPos.x < this.transform.position.x + 3
+			      && previousPos.y > this.transform.position.y - 3 && previousPos.y < this.transform.position.y + 3)
+			      || transform.position.y < -100) //add z check later
+			{
+				makeExplosion();
+				destroySelf();
+			}
+			this.updatePreviousPosition ();
 		}
 
 		public void generateNewTarget()
@@ -69,12 +99,11 @@ namespace AssemblyCSharp
 
 		public void getDamage(int dmg)
 		{
-			print ("here");
 			this.health -= dmg;
 			if(health <= 0) // check if killed
 			{
-				HiveMind.Instance.removeDrone(this); // remove drone from hivemind
-				Destroy(this.gameObject);            // delete self
+				makeExplosion();
+				destroySelf();
 			}
 		}
 
@@ -87,6 +116,18 @@ namespace AssemblyCSharp
 					this.GetComponent<NavMeshAgent> ().SetDestination (movePlace.position);
 				}
 			}
+		}
+
+		public void makeExplosion()
+		{
+			Vector3 explosionPosition = new Vector3 (this.transform.position.x, this.transform.position.y + 2, this.transform.position.z);
+			Instantiate(EventHandler.Instance.tinyExplosion,explosionPosition,Quaternion.identity);
+		}
+
+		public void destroySelf()
+		{
+			HiveMind.Instance.removeDrone(this); // remove drone from hivemind
+			Destroy(this.gameObject);            // delete self
 		}
 	}
 }

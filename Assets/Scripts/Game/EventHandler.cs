@@ -4,12 +4,17 @@ using System.Collections.Generic;
 
 public class EventHandler : MonoBehaviour{
 	public static int multiplyNum;
-	public static float spawnDelayTime;
+	public float spawnDelayTime;
 
 	public GameObject enemyMelee;
 	public GameObject enemyRanged;
 	public GameObject enemyPush;
 	public GameObject bullet;
+	public GameObject tinyExplosion;
+	public GameObject mushroomExplosion;
+	public GameObject bossExplosion;
+	public GameObject Center;
+	public GameObject DeathPosition;
 
 	private bool found;
 	private static GameObject staticMelee;
@@ -105,5 +110,19 @@ public class EventHandler : MonoBehaviour{
 	public int getWave()
 	{
 		return wave;
+	}
+	
+	public void gameOverExplosion()
+	{
+		for(int i = 0 ; i < this.getSpawnPoints().Length; i++)
+		{
+			// reduce spawnpoint height by 8 for explosion
+			Vector3 explosionSpawnPoint = new Vector3(this.getSpawnPoints()[i].transform.position.x,
+			                                          this.getSpawnPoints()[i].transform.position.y - 100, 
+			                                          this.getSpawnPoints()[i].transform.position.z);
+			// explode!
+			Instantiate(this.mushroomExplosion,explosionSpawnPoint,Quaternion.identity);
+
+		}
 	}
 }

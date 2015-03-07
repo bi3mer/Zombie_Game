@@ -73,12 +73,18 @@ public class Player : MonoBehaviour {
 	
 	IEnumerator MyCoroutine()
     {
+		Camera.main.gameObject.transform.position = Vector3.Lerp (Camera.main.gameObject.transform.position, EventHandler.Instance.DeathPosition.transform.position,5.0f);
+		GetComponent<MouseLook> ().enabled = false;
+		GetComponent<RigidbodyFPS> ().enabled = false;
+		Camera.main.transform.LookAt(EventHandler.Instance.Center.transform);
+		this.rigidbody.useGravity = false;
+		HiveMind.Instance.destroyAll ();
+		yield return new WaitForSeconds (3);
+		EventHandler.Instance.gameOverExplosion ();
 		print("Waiting");
-        yield return new WaitForSeconds(1);
-		Application.OpenURL ("http://goo.gl/forms/57PiUcOHVf"); // open url at end of game
-		Application.Quit(); // this should be changed later on
-		//Destroy(this.gameObject); // this command is bad
-		Debug.Break();
+        yield return new WaitForSeconds(7);
+		Application.OpenURL ("http://goo.gl/forms/UM2v06UOhE"); // open url at end of game
+		Application.LoadLevel("menuScene");
 		print("Waited");
 
     }

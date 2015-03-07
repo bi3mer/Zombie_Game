@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using AssemblyCSharp;
 public class PlayerAttack : MonoBehaviour {
 
 	public int baseDamage = 10;
@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour {
 
 	// If the arms collide with something than deal damage and play the sounds effect.
 	void OnCollisionEnter(Collision collider){
-		print(collider.gameObject.name);
+		//print(collider.gameObject.name);
 		if(collider.gameObject.CompareTag("enemy")){
 			GameObject enemy = collider.gameObject;
 			DealDamage(enemy);
@@ -45,7 +45,7 @@ public class PlayerAttack : MonoBehaviour {
 	
 	// Will talk to the enemy script to deal damage to a specific enemy.	
 	void DealDamage(GameObject enemy){
-		Drone drone = enemy.GetComponent ("Drone") as Drone;
+		DroneAbstract drone = enemy.GetComponent ("DroneAbstract") as DroneAbstract;
 		drone.getDamage (baseDamage * strength);
 	}
 }

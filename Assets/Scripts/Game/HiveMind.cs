@@ -67,11 +67,20 @@ public class HiveMind : MonoBehaviour {
 		else
 		{
 
-			foreach(Drone drone in this.drones)
+			foreach(DroneAbstract drone in this.drones)
 			{
 				//print("must implement move in random direction");
 				drone.moveRandomDirection();
 			}
+		}
+	}
+
+	public void destroyAll()
+	{
+		for (int i =0; i < this.drones.Count; i++) 
+		{
+			DroneAbstract drn = drones[i] as DroneAbstract;
+			drn.destroySelf();
 		}
 	}
 
