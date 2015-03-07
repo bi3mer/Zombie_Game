@@ -13,7 +13,8 @@ public class Player : MonoBehaviour {
 
 	public int maxHealth = 100;
 	public int curHealth = 100;
-	public int rage = 0;
+	public int rage = 100;
+	public float rageMult = 1.0f;
 	public int rageIncOnHit = 5;
 	public int stamina = 1;
 	public int speed = 12;
@@ -60,13 +61,12 @@ public class Player : MonoBehaviour {
 	// === DAMAGE ===
 	public void getDamage(int damage){
 		setHealth(curHealth -= damage);
-		print("Current Health: " + curHealth);
 		if (curHealth <= 0){
 			audio.PlayOneShot(deathNoise, 0.7F);
 			gameObject.transform.Rotate(Vector3.up * Time.deltaTime, Space.World);
 			StartCoroutine(MyCoroutine());
 		} else {
-			incRage(rageIncOnHit);
+			incRage((int)(rageMult*rageIncOnHit));
 			audio.PlayOneShot(getHitNoise, 0.7F);
 		}
 	}
@@ -89,13 +89,21 @@ public class Player : MonoBehaviour {
 	}
 	
 	public void setRage(int rage){
-		this.rage = rage;
+		this.rage = (int)(rage);
 		rageNumber.text = this.rage.ToString();
 	}
 	
 	public void incRage(int rage){
-		this.rage += rage;
+		this.rage += (int)(rage);
 		rageNumber.text = this.rage.ToString();
+	}
+	
+	public void incRageMult(){
+		rageMult += .2f;
+	}
+	
+	public float getRageMult(){
+		return rageMult;
 	}
 
 	// === HEALTH ===

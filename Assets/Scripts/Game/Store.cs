@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 
 public class Store : MonoBehaviour {
 
@@ -8,7 +10,6 @@ public class Store : MonoBehaviour {
  
 	//public Audioclip sound; 
 	public int cost = 10;
-	private int curRage;
  
 	Player PlayerVars;
  
@@ -20,22 +21,37 @@ public class Store : MonoBehaviour {
 	
 	public AudioClip buyNoise;
 	
+	public Text costGUI;
+	
 	public enum State{
-		Stamina, Strength, Speed, Health, Damage, INFO
+		Stamina, Anger, Strength, Speed, Heal, Damage, INFO
 	}
 		
 	void Start(){
 		GameObject player = GameObject.FindWithTag("player");
-		PlayerVars = player.GetComponent<Player> ();
+		PlayerVars = player.GetComponent<Player>();
+		costGUI.text = cost.ToString();
 	}
 	
 	void OnMouseEnter() {
 		if (Vector3.Distance(Camera.main.gameObject.transform.position, gameObject.transform.position) < 10f) {
 			startcolor = renderer.material;
 			renderer.material = hovercolor;
-			curRage = PlayerVars.getRage();
 			business = true;
 		}
+	}
+	
+	void buy(){
+		PlayerVars.setRage(PlayerVars.getRage() - cost);
+		audio.PlayOneShot(buyNoise, 0.1F);
+		updateCost();
+		if (PlayerVars.getRage() < 0)
+			PlayerVars.setRage(0);
+	}
+	
+	void updateCost(){
+		cost = (int)(Mathf.Floor(cost * 1.5f));
+		costGUI.text = cost.ToString();
 	}
 
 	void OnMouseExit() {
@@ -44,13 +60,21 @@ public class Store : MonoBehaviour {
 	}
 	
 	void OnMouseDown() {
-		if(business && curRage >= cost){
+		print("COST: " + cost);
+		print("CURR: " + PlayerVars.getRage());
+		if(business && PlayerVars.getRage() >= cost){
 			
 			switch(state){
 			case State.Strength:
 				print("Strength");
 				PlayerVars.incStrength();
 				buy();
+				break;
+				
+			case State.Anger:
+				print("Anger");
+				buy();
+				PlayerVars.incRageMult();
 				break;
 				
 			case State.Stamina:
@@ -65,9 +89,10 @@ public class Store : MonoBehaviour {
 				buy();
 				break;
 			
-			case State.Health:
+			case State.Heal:
 				PlayerVars.repHealth();
-				print("Heath");
+				print("Heal");
+				buy();
 				break;
 
 			case State.Damage:
@@ -77,24 +102,12 @@ public class Store : MonoBehaviour {
 
 			case State.INFO:	
 				print("-=INFO=-");
-				print("CURRENT RAGE: " + curRage);
 				break;
 				
 			default:
 				print("Default");
-				print("CURRENT RAGE: " + curRage);
 				break;
 			}
 		}
-	}
-	
-	void buy(){
-		cost = (int)(Mathf.Floor(cost * 1.5f));
-		curRage = curRage - cost;
-		PlayerVars.setRage(curRage);
-		audio.PlayOneShot(buyNoise, 0.1F);
-		print(curRage);
-		if (curRage < 0)
-			PlayerVars.setRage(0);
 	}
 }
