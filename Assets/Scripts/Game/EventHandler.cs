@@ -25,6 +25,7 @@ public class EventHandler : MonoBehaviour{
 	private static int droneCount;
 	private static GameObject[] spawnPoints;
 
+
 	public static EventHandler instance;
 
 	public static EventHandler Instance{
@@ -86,6 +87,9 @@ public class EventHandler : MonoBehaviour{
 			yield return new WaitForSeconds (spawnDelayTime);
 		}
 		wave++;
+		
+		// update GUI!!!!
+		//Player.Instance.finishWave(this.wave);
 	}
 
 	public int getDroneCount(){

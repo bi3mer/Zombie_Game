@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
 	public int speed = 12;
 	public float jump = 4;
 	public int strength = 1;
+	public int waveNum = 1;
 
 	public int damage = 10;
 	public GameObject Larm;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour {
 	
 	public Text healthNumber;
 	public Text rageNumber;
+	public Text waveNumber;
 
 	void Awake() {
 		transform = gameObject.GetComponent<Transform>();
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour {
 		rage = 100;
 		healthNumber.text = maxHealth.ToString();
 		rageNumber.text = rage.ToString();
+		waveNumber.text = EventHandler.Instance.getWave().ToString();
 	}
 
 	// Update is called once per frame
@@ -159,4 +162,6 @@ public class Player : MonoBehaviour {
 		print ("Speed: " + this.speed);
 		print ("Jump: " + this.jump);
 	}
+	
+	//public void finishWave();
 }
