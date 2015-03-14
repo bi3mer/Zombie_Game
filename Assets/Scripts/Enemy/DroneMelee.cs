@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using AssemblyCSharp;
 
-public class Drone : DroneAbstract {
+public class DroneMelee : DroneAbstract {
 	public int attackRange;
 	public int attack;
 
@@ -20,11 +20,11 @@ public class Drone : DroneAbstract {
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
 
 		// Create drone charecteristics
-		attackRange += Random.Range (2,20);
-		searchRange += Random.Range (5, 10);
-		health 		+= Random.Range (0, 50); // increase scale of model based on health?
+		attackRange += Random.Range (3,5);
+		searchRange += Random.Range (10, 15);
+		health 		+= Random.Range (40, 50); // increase scale of model based on health?
 		moveSpeed 	+= Random.Range (2, 10);
-		attack      += Random.Range (1, 5);
+		attack      += Random.Range (2, 5);
 
 		// multiply values based on waves for balancing
 		health 		+= (health      * EventHandler.Instance.getWave() / 5);  //magic numbers in here for now. will balance later
@@ -70,25 +70,3 @@ public class Drone : DroneAbstract {
 		}
 	}
 }
-
-
-/*
- * RaycastHit hit;
-		Ray shotRay = new Ray (transform.position, transform.forward);
-		
-		if (Physics.Raycast (shotRay, out hit, 100)) 	
-		{
-			
-			if(hit.collider.tag == "player")
-			{
-				transform.LookAt (GameObject.FindGameObjectWithTag ("player").transform);
-				print ("hello raycast");
-				rigidbody.velocity = transform.forward * speed;
-				Destroy (gameObject,lifeTime);
-			}
-			
-			
-		}
-	}
-
-*/

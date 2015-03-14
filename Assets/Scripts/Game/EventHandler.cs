@@ -6,9 +6,15 @@ public class EventHandler : MonoBehaviour{
 	public static int multiplyNum;
 	public float spawnDelayTime;
 
+	/*
 	public GameObject enemyMelee;
 	public GameObject enemyRanged;
 	public GameObject enemyPush;
+	*/
+
+	public GameObject[] enemies; // used to spawn enmies
+	public GameObject[] bosses;  // used to spawn enemies
+
 	public GameObject bullet;
 	public GameObject tinyExplosion;
 	public GameObject mushroomExplosion;
@@ -17,14 +23,10 @@ public class EventHandler : MonoBehaviour{
 	public GameObject DeathPosition;
 
 	private bool found;
-	private static GameObject staticMelee;
-	private static GameObject staticRanged;
-	private static GameObject staticPush;
 	private static int wave;
 	private static int timeBetweenWaves;
 	private static int droneCount;
 	private static GameObject[] spawnPoints;
-
 
 	public static EventHandler instance;
 
@@ -41,14 +43,14 @@ public class EventHandler : MonoBehaviour{
 
 	public void init(){
 		found = false;
-		multiplyNum = 3;
-		staticMelee = enemyMelee;
-		staticRanged = enemyRanged;
-		staticPush = enemyPush;
-		wave = 1;
+		multiplyNum = 3;;
+		wave = 5; // bosswave!!
 		timeBetweenWaves = 15;
 		droneCount = 0;
+
+		/***********************************/
 		spawnPoints = GameObject.FindGameObjectsWithTag ("spawner");
+		/***********************************/
 	}
 
 	public GameObject[] getSpawnPoints()
@@ -62,34 +64,44 @@ public class EventHandler : MonoBehaviour{
 		
 	}
 	
-	public IEnumerator  spawnWaves(){
-		print ("spawn: " + this.getWave ());
-		for (int i = 0; i < wave * multiplyNum; i++) {
-			int index = Random.Range(0,spawnPoints.Length );
-			int rand = Random.Range(-10,10);
-			if(rand > 4)
-			{ // Melee
-				GameObject melee = staticMelee;
-				Instantiate(melee, spawnPoints[index].transform.position, Quaternion.identity);
-			} 
-			else if(rand > -3)
-			{
-				GameObject push = staticRanged;
-				Instantiate (push,spawnPoints[index].transform.position,Quaternion.identity);
-			}
-			else
-			{ // Ranged
-				GameObject ranged = staticPush;
-				Instantiate(ranged,spawnPoints[index].transform.position, Quaternion.identity);
-				Debug.Log("change Eventhandler.cs spawnwaves() for inclusion of ranged");
-			}
-			droneCount++;
-			yield return new WaitForSeconds (spawnDelayTime);
-		}
+	public IEnumerator  spawnWaves()
+	{
 		wave++;
-		
-		// update GUI!!!!
-		//Player.Instance.finishWave(this.wave);
+		if(wave % 5 == 0) // spawn bosses every 10 waves
+		{
+			this.spawnBoss();
+			yield return new WaitForSeconds(0);
+		}
+		else
+		{
+			StartCoroutine(this.spawnEnemies());
+		}
+	}
+
+	public void spawnBoss()
+	{
+		int spawnLocation = Random.Range(0,spawnPoints.Length);
+		int bossType = Random.Range(0,this.bosses.Length);
+		int index = Random.Range (0, this.getSpawnPoints ().Length);
+
+		Instantiate(this.bosses[bossType],spawnPoints[index].transform.position,Quaternion.identity);
+	}
+
+	public IEnumerator spawnEnemies()
+	{
+		for (int i = 0; i < wave * multiplyNum; i++) 
+		{
+			int spawnLocation = Random.Range(0,spawnPoints.Length);
+			int spawnType 	  = Random.Range(0,enemies.Length);
+			int index 		  = Random.Range (0,getSpawnPoints().Length);
+
+			print ("i: " + i  + " " + wave*multiplyNum);
+
+			Instantiate(this.enemies[spawnType], spawnPoints[index].transform.position, Quaternion.identity);
+
+			droneCount++; // increase drone count
+			yield return new WaitForSeconds (spawnDelayTime); // pause between each spawn, to decrease lag
+		}
 	}
 
 	public int getDroneCount(){
@@ -127,6 +139,8 @@ public class EventHandler : MonoBehaviour{
 			// explode!
 			Instantiate(this.mushroomExplosion,explosionSpawnPoint,Quaternion.identity);
 
+			// Destroy's ufo from blast
+			Destroy(this.getSpawnPoints()[i]);
 		}
 	}
 }

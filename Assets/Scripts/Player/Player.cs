@@ -50,7 +50,7 @@ public class Player : MonoBehaviour {
 		rage = 100;
 		healthNumber.text = maxHealth.ToString();
 		rageNumber.text = rage.ToString();
-		waveNumber.text = EventHandler.Instance.getWave().ToString();
+		//waveNumber.text = EventHandler.Instance.getWave().ToString();
 	}
 
 	// Update is called once per frame
