@@ -75,8 +75,7 @@ public class EventHandler : MonoBehaviour{
 	{
 		int spawnLocation = Random.Range(0,spawnPoints.Length);
 		int bossType = Random.Range(0,this.bosses.Length);
-		int index = Random.Range (0, this.spawners.Length);
-
+		int index = Random.Range (0, this.bosses.Length);
 		Instantiate(this.bosses[bossType],spawnPoints[index].transform.position,Quaternion.identity);
 	}
 
