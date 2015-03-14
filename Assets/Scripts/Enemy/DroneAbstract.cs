@@ -46,7 +46,7 @@ namespace AssemblyCSharp
 
 		public void checkPos()
 		{
-			if(  (previousPos.x > this.transform.position.x - 3 && previousPos.x < this.transform.position.x + 3
+			if(  (   previousPos.x > this.transform.position.x - 3 && previousPos.x < this.transform.position.x + 3
 			      && previousPos.y > this.transform.position.y - 3 && previousPos.y < this.transform.position.y + 3
 			      && previousPos.z > this.transform.position.z - 3 && previousPos.z < this.transform.position.z + 3)
 			      || transform.position.y < -100) //add z check later
@@ -109,7 +109,7 @@ namespace AssemblyCSharp
 			}
 		}
 
-		public void moveTowards(Transform movePlace)
+		public virtual void moveTowards(Transform movePlace)
 		{
 			if(transform.position.y < 10){ // if component is still in the air, don't find a path
 				this.GetComponent<NavMeshAgent>().enabled = true; // enable navmesh agent

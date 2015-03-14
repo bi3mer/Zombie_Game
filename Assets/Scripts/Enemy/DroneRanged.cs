@@ -6,12 +6,6 @@ public class DroneRanged : DroneAbstract {
 	public int attackRange;
 	public int attack;
 
-	private int fireTime;
-	private float nextFire; // rate of fire
-
-	/*
-	 * This will need to be altered a bit, to not find the gameobjects with tag.
-	 */
 	// Use this for initialization
 	void Start () 
 	{
@@ -36,59 +30,33 @@ public class DroneRanged : DroneAbstract {
 
 		walkStop = 5 + (int)attackRange; 
 
-		fireTime = 0;
-		nextFire = 25;
 		if(searchRange < attackRange)
 		{
 			searchRange = attackRange + 1;
 		} 
 		this.addToHive ();
 		this.checkSelf ();
+
+		StartCoroutine (attackPlayer ());// check and attack every second
 	}
 
 	// Update is called once per frame
-	void Update () 
+	public IEnumerator attackPlayer()
 	{
-		fireTime++;
-		// search to attack
-		if(   player.position.x+attackRange > transform.position.x && player.position.x - attackRange < transform.position.x
-		   && player.position.y+attackRange > transform.position.y && player.position.y - attackRange < transform.position.y
-		   && player.position.z+attackRange > transform.position.z && player.position.z - attackRange < transform.position.z)
+		while(true)
 		{
-			attackPlayer();
-		}
-	}
-
-	public void attackPlayer()
-	{
-		if(fireTime > nextFire) // limits how fast the player can attack
-		{
-			fireTime = 0;
-			bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
-			GameObject bullet = Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation)) as GameObject;
-			bullet.GetComponent<DroneFire>().setDmg(this.attack);
+			print ("1");
+			if(   player.position.x+attackRange > transform.position.x && player.position.x - attackRange < transform.position.x
+			   && player.position.y+attackRange > transform.position.y && player.position.y - attackRange < transform.position.y
+			   && player.position.z+attackRange > transform.position.z && player.position.z - attackRange < transform.position.z) // limits how fast the player can attack
+			{
+				print ("2");
+				bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
+				GameObject bullet = Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation)) as GameObject;
+				bullet.GetComponent<DroneFire>().setDmg(this.attack);
+			}
+			yield return new WaitForSeconds (1);
 		}
 	}
 }
 
-
-/*
- * RaycastHit hit;
-		Ray shotRay = new Ray (transform.position, transform.forward);
-		
-		if (Physics.Raycast (shotRay, out hit, 100)) 	
-		{
-			
-			if(hit.collider.tag == "player")
-			{
-				transform.LookAt (GameObject.FindGameObjectWithTag ("player").transform);
-				print ("hello raycast");
-				rigidbody.velocity = transform.forward * speed;
-				Destroy (gameObject,lifeTime);
-			}
-			
-			
-		}
-	}
-
-*/

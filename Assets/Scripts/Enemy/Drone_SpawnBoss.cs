@@ -5,9 +5,7 @@ using AssemblyCSharp;
 public class Drone_SpawnBoss : DroneAbstract {
 	public int attackRange;
 	public int attack;
-	
-	private int fireTime;
-	private float nextFire; // rate of fire
+
 	private int hits = 30;
 	/*
 	 * This will need to be altered a bit, to not find the gameobjects with tag.
@@ -20,23 +18,20 @@ public class Drone_SpawnBoss : DroneAbstract {
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
 		
 		// Create drone charecteristics
-		attackRange += Random.Range (2,20);
-		searchRange += Random.Range (5, 10);
-		health 		+= Random.Range (0, 50); // increase scale of model based on health?
+		attackRange += Random.Range (10,20);
+		searchRange += Random.Range (15, 30);
 		moveSpeed 	+= Random.Range (2, 10);
-		attack      += Random.Range (1, 5);
+		attack      += Random.Range (5,15);
 		
 		// multiply values based on waves for balancing
-		health 		+= (health      * EventHandler.Instance.getWave() / 5);  // magic numbers in here for now. will balance later
 		moveSpeed   += (moveSpeed + (EventHandler.Instance.getWave () / 10));
-		
+
+	
 		this.GetComponent<NavMeshAgent> ().stoppingDistance = attackRange - 1;
 		this.GetComponent<NavMeshAgent> ().speed = moveSpeed;
 		
 		walkStop = 5 + (int)attackRange; 
-		
-		fireTime = 0;
-		nextFire = 25;
+
 		if(searchRange < attackRange)
 		{
 			searchRange = attackRange + 1;
@@ -56,8 +51,8 @@ public class Drone_SpawnBoss : DroneAbstract {
 			   && player.position.y+attackRange > transform.position.y && player.position.y - attackRange < transform.position.y
 			   && player.position.z+attackRange > transform.position.z && player.position.z - attackRange < transform.position.z)
 			{
-				bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
-				GameObject bullet = Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation)) as GameObject;
+				bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y+1, this.transform.position.z); // this y+1 will need to be changed to be dynamic
+				GameObject bullet = Instantiate (EventHandler.Instance.BossBullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation)) as GameObject;
 				bullet.GetComponent<DroneFire>().setDmg(this.attack);
 			}
 			yield return new WaitForSeconds (1.5f);
