@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class MenuMover : MonoBehaviour {
-
-	public Transform[] targets;
 	public int pointNum = 0;
     public float speed;
 
@@ -15,12 +13,14 @@ public class MenuMover : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, targets[pointNum].position, step);
-		if(gameObject.transform.position == targets[pointNum].transform.position){
-			if(pointNum == targets.Length-1){
-				print("num");
+        transform.position = Vector3.MoveTowards(transform.position, EventHandler.Instance.spawnPoints[pointNum].transform.position, step);
+		if(gameObject.transform.position == EventHandler.Instance.spawnPoints[pointNum].transform.position){
+			if(pointNum == EventHandler.Instance.spawnPoints.Length-1)
+			{
 				pointNum = 0;
-			}else{
+			}
+			else
+			{
 				pointNum++;
 			}
 		}

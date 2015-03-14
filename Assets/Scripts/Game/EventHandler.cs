@@ -15,7 +15,8 @@ public class EventHandler : MonoBehaviour{
 	public GameObject[] enemies; // used to spawn enmies
 	public GameObject[] bosses;  // used to spawn enemies
 
-	public GameObject bullet;
+	public GameObject bullet; // projectile
+	public GameObject BossBullet;  // projectile
 	public GameObject tinyExplosion;
 	public GameObject mushroomExplosion;
 	public GameObject bossExplosion;
@@ -26,7 +27,8 @@ public class EventHandler : MonoBehaviour{
 	private static int wave;
 	private static int timeBetweenWaves;
 	private static int droneCount;
-	private static GameObject[] spawnPoints;
+	public GameObject[] spawnPoints; // where the ufo's move to in the sky
+	public GameObject[] spawners;    // ufo's in the sky
 
 	public static EventHandler instance;
 
@@ -44,18 +46,9 @@ public class EventHandler : MonoBehaviour{
 	public void init(){
 		found = false;
 		multiplyNum = 3;;
-		wave = 5; // bosswave!!
+		wave = 4; // bosswave!!
 		timeBetweenWaves = 15;
 		droneCount = 0;
-
-		/***********************************/
-		spawnPoints = GameObject.FindGameObjectsWithTag ("spawner");
-		/***********************************/
-	}
-
-	public GameObject[] getSpawnPoints()
-	{
-		return spawnPoints;
 	}
 
 	public IEnumerator waitSpawn(){
@@ -82,7 +75,7 @@ public class EventHandler : MonoBehaviour{
 	{
 		int spawnLocation = Random.Range(0,spawnPoints.Length);
 		int bossType = Random.Range(0,this.bosses.Length);
-		int index = Random.Range (0, this.getSpawnPoints ().Length);
+		int index = Random.Range (0, this.spawners.Length);
 
 		Instantiate(this.bosses[bossType],spawnPoints[index].transform.position,Quaternion.identity);
 	}
@@ -93,9 +86,7 @@ public class EventHandler : MonoBehaviour{
 		{
 			int spawnLocation = Random.Range(0,spawnPoints.Length);
 			int spawnType 	  = Random.Range(0,enemies.Length);
-			int index 		  = Random.Range (0,getSpawnPoints().Length);
-
-			print ("i: " + i  + " " + wave*multiplyNum);
+			int index 		  = Random.Range (0,spawners.Length);
 
 			Instantiate(this.enemies[spawnType], spawnPoints[index].transform.position, Quaternion.identity);
 
@@ -130,17 +121,17 @@ public class EventHandler : MonoBehaviour{
 	
 	public void gameOverExplosion()
 	{
-		for(int i = 0 ; i < this.getSpawnPoints().Length; i++)
+		for(int i = 0 ; i < this.spawners.Length; i++)
 		{
 			// reduce spawnpoint height by 8 for explosion
-			Vector3 explosionSpawnPoint = new Vector3(this.getSpawnPoints()[i].transform.position.x,
-			                                          this.getSpawnPoints()[i].transform.position.y - 100, 
-			                                          this.getSpawnPoints()[i].transform.position.z);
+			Vector3 explosionSpawnPoint = new Vector3(this.spawners[i].transform.position.x,
+			                                          this.spawners[i].transform.position.y - 100, 
+			                                          this.spawners[i].transform.position.z);
 			// explode!
 			Instantiate(this.mushroomExplosion,explosionSpawnPoint,Quaternion.identity);
 
 			// Destroy's ufo from blast
-			Destroy(this.getSpawnPoints()[i]);
+			Destroy(this.spawners[i]);
 		}
 	}
 }
