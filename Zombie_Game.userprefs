@@ -1,6 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Enemy\MenuMover.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Enemy\MoveSpawner.cs" Line="9" Column="20" />
+      <File FileName="Assets\Scripts\Game\EventHandler.cs" Line="30" Column="72" />
+      <File FileName="Assets\Scripts\Enemy\MenuMover.cs" Line="23" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+=======
   <MonoDevelop.Ide.Workbench />
+>>>>>>> origin/master
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

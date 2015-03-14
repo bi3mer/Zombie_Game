@@ -36,7 +36,6 @@ public class PlayerAttack : MonoBehaviour {
 
 	// If the arms collide with something than deal damage and play the sounds effect.
 	void OnCollisionEnter(Collision collider){
-		//print(collider.gameObject.name);
 		if(collider.gameObject.CompareTag("enemy")){
 			GameObject enemy = collider.gameObject;
 			DealDamage(enemy);
