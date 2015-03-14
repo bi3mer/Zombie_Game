@@ -11,6 +11,7 @@ public class Store : MonoBehaviour {
 	//public Audioclip sound; 
 	public int cost = 10;
  
+	public GameObject player;
 	Player PlayerVars;
  
 	bool business = false;
@@ -28,8 +29,7 @@ public class Store : MonoBehaviour {
 	}
 		
 	void Start(){
-		GameObject player = GameObject.FindWithTag("player");
-		PlayerVars = player.GetComponent<Player>();
+		PlayerVars = player.GetComponent<Player>();		
 		costGUI.text = cost.ToString();
 	}
 	
@@ -54,12 +54,21 @@ public class Store : MonoBehaviour {
 		costGUI.text = cost.ToString();
 	}
 
+	void OnMouseOver(){
+		if (Input.GetAxis("XFire1") == 1 || Input.GetAxis("XFire1") == 1)
+			this.purchace();
+	}
+	
 	void OnMouseExit() {
 		renderer.material = startcolor;
 		business = false;
 	}
 	
 	void OnMouseDown() {
+		this.purchace();
+	}
+	
+	void purchace(){
 		print("COST: " + cost);
 		print("CURR: " + PlayerVars.getRage());
 		if(business && PlayerVars.getRage() >= cost){
