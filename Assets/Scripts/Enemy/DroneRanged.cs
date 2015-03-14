@@ -45,12 +45,12 @@ public class DroneRanged : DroneAbstract {
 	{
 		while(true)
 		{
-			print ("1");
+//			print ("1");
 			if(   player.position.x+attackRange > transform.position.x && player.position.x - attackRange < transform.position.x
 			   && player.position.y+attackRange > transform.position.y && player.position.y - attackRange < transform.position.y
 			   && player.position.z+attackRange > transform.position.z && player.position.z - attackRange < transform.position.z) // limits how fast the player can attack
 			{
-				print ("2");
+//				print ("2");
 				bulletSpawn = new Vector3 (this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z); // this y+1 will need to be changed to be dynamic
 				GameObject bullet = Instantiate (EventHandler.Instance.bullet, bulletSpawn, Quaternion.Inverse(this.player.transform.rotation)) as GameObject;
 				bullet.GetComponent<DroneFire>().setDmg(this.attack);

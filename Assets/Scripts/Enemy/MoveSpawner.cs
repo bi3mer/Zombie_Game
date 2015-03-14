@@ -10,7 +10,7 @@ public class MoveSpawner : MonoBehaviour {
 
 	void Start(){
 		this.spawnPoints = GameObject.FindGameObjectsWithTag ("spawn_point");
-		print (this.spawnPoints.Length );
+		//print (this.spawnPoints.Length );
 		this.index = 0;
 		this.changeIndex ();
 	}

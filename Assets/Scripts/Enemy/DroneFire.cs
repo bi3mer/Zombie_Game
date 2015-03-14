@@ -20,7 +20,7 @@ public class DroneFire : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		print (other.collider.tag);
+		//print (other.collider.tag);
 		if (other.gameObject.tag == "player") 
 		{
 			other.gameObject.GetComponent<Player>().getDamage(damage);   // deal damage to player

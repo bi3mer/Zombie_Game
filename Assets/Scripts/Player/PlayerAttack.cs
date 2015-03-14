@@ -16,6 +16,7 @@ public class PlayerAttack : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		print("Started");
 		anim = GetComponent<Animator>();
 	}
 	
@@ -36,12 +37,13 @@ public class PlayerAttack : MonoBehaviour {
 	}
 
 	// If the arms collide with something than deal damage and play the sounds effect.
-	void OnCollisionEnter(Collision collider){
+	void OnCollisionStay(Collision collider){
 
-		print(collider.gameObject.name);
+		print("Collider Name: " + collider.gameObject.name);
 
 		if(collider.gameObject.CompareTag("enemy")){
 			GameObject enemy = collider.gameObject;
+			print("Deal Damage (COL): " + enemy);
 			DealDamage(enemy);
 		}
 	}
@@ -49,6 +51,7 @@ public class PlayerAttack : MonoBehaviour {
 	// Will talk to the enemy script to deal damage to a specific enemy.	
 	void DealDamage(GameObject enemy){
 		DroneAbstract drone = enemy.GetComponent ("DroneAbstract") as DroneAbstract;
-		drone.getDamage (baseDamage * strength);
+		print("Deal Damage (DD) |E| : " + enemy);
+		drone.getDamage(baseDamage * strength);
 	}
 }

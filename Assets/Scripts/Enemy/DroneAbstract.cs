@@ -101,6 +101,7 @@ namespace AssemblyCSharp
 
 		public virtual void getDamage(int dmg)
 		{
+			print("Get Damage (DS) : " + dmg);
 			this.health -= dmg;
 			if(health <= 0) // check if killed
 			{
