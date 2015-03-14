@@ -6,11 +6,11 @@ public class DronePush : DroneAbstract {
 	// Use this for initialization
 	void Start () {
 		searchRange += Random.Range (5, 10);
-		health 		+= Random.Range (0, 50); // increase scale of model based on health?
+		health 		+= Random.Range (50,100); // push drones will always have more health than the average drone out there
 		moveSpeed 	+= Random.Range (1, 5);
 
 		// multiply values based on waves for balancing
-		health 		+= (health      * EventHandler.Instance.getWave() / 5);  //magic numbers in here for now. will balance later
+		health 		+= (health      * EventHandler.Instance.getWave() / 2);  
 		moveSpeed   += (moveSpeed + (EventHandler.Instance.getWave () / 10));
 		//attack      += (attack 		+ (EventHandler.Instance.getWave()/10));
 		
@@ -22,14 +22,13 @@ public class DronePush : DroneAbstract {
 		player = Player.transform;
 
 		HiveMind.Instance.addDrone(this);
-		this.checkSelf ();
 	}
 
 	void OnCollisionEnter (Collision col)
 	{
 		if(col.gameObject.tag == "player")
 		{
-			col.gameObject.rigidbody.AddExplosionForce(50.0f,transform.position,5.0f,3.0f);
+			col.gameObject.rigidbody.AddExplosionForce(100.0f,transform.position,5.0f,3.0f);
 		}
 	}
 

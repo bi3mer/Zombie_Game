@@ -47,7 +47,8 @@ namespace AssemblyCSharp
 		public void checkPos()
 		{
 			if(  (previousPos.x > this.transform.position.x - 3 && previousPos.x < this.transform.position.x + 3
-			      && previousPos.y > this.transform.position.y - 3 && previousPos.y < this.transform.position.y + 3)
+			      && previousPos.y > this.transform.position.y - 3 && previousPos.y < this.transform.position.y + 3
+			      && previousPos.z > this.transform.position.z - 3 && previousPos.z < this.transform.position.z + 3)
 			      || transform.position.y < -100) //add z check later
 			{
 				makeExplosion();
@@ -58,7 +59,7 @@ namespace AssemblyCSharp
 
 		public void generateNewTarget()
 		{
-			int walkRadius = 1000;
+			int walkRadius = 500;
 			Vector3 randomDirection = Random.insideUnitSphere * walkRadius;// will need to be changed
 			NavMeshHit hit;
 			NavMesh.SamplePosition (randomDirection, out hit, walkRadius, 1);
@@ -70,6 +71,7 @@ namespace AssemblyCSharp
 		public void moveRandomDirection()
 		{
 			if(   target.x > transform.position.x - walkStop && target.x < transform.position.x + walkStop
+			   && target.y > transform.position.y - walkStop && target.y < transform.position.y + walkStop
 			   && target.z > transform.position.z - walkStop && target.z < transform.position.z + walkStop)
 			{
 				generateNewTarget ();
@@ -97,7 +99,7 @@ namespace AssemblyCSharp
 			moveTowards (player);
 		}
 
-		public void getDamage(int dmg)
+		public virtual void getDamage(int dmg)
 		{
 			this.health -= dmg;
 			if(health <= 0) // check if killed
@@ -118,7 +120,7 @@ namespace AssemblyCSharp
 			}
 		}
 
-		public void makeExplosion()
+		public virtual void makeExplosion()
 		{
 			Vector3 explosionPosition = new Vector3 (this.transform.position.x, this.transform.position.y + 2, this.transform.position.z);
 			Instantiate(EventHandler.Instance.tinyExplosion,explosionPosition,Quaternion.identity);
