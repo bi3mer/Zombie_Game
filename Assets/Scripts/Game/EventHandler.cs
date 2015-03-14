@@ -37,7 +37,7 @@ public class EventHandler : MonoBehaviour{
 			if(instance == null)
 			{
 				instance = GameObject.FindObjectOfType<EventHandler>();
-				DontDestroyOnLoad(instance.gameObject);
+				//DontDestroyOnLoad(instance.gameObject);
 			}
 			return instance;
 		}
@@ -51,10 +51,10 @@ public class EventHandler : MonoBehaviour{
 		droneCount = 0;
 	}
 
-	public IEnumerator waitSpawn(){
+	public IEnumerator waitSpawn()
+	{
 		yield return new WaitForSeconds (timeBetweenWaves);
 		StartCoroutine(spawnWaves ());
-		
 	}
 	
 	public IEnumerator  spawnWaves()
@@ -87,7 +87,7 @@ public class EventHandler : MonoBehaviour{
 			int spawnType 	  = Random.Range(0,enemies.Length);
 			int index 		  = Random.Range (0,spawners.Length);
 
-			Instantiate(this.enemies[spawnType], spawnPoints[index].transform.position, Quaternion.identity);
+			Instantiate(this.enemies[spawnType], spawners[index].transform.position, Quaternion.identity);
 
 			droneCount++; // increase drone count
 			yield return new WaitForSeconds (spawnDelayTime); // pause between each spawn, to decrease lag

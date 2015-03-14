@@ -59,7 +59,7 @@ namespace AssemblyCSharp
 
 		public void generateNewTarget()
 		{
-			int walkRadius = 500;
+			int walkRadius = 200;
 			Vector3 randomDirection = Random.insideUnitSphere * walkRadius;// will need to be changed
 			NavMeshHit hit;
 			NavMesh.SamplePosition (randomDirection, out hit, walkRadius, 1);
@@ -101,7 +101,7 @@ namespace AssemblyCSharp
 
 		public virtual void getDamage(int dmg)
 		{
-			print("Get Damage (DS) : " + dmg);
+			this.player.gameObject.GetComponent<Player> ().incRage (1);
 			this.health -= dmg;
 			if(health <= 0) // check if killed
 			{
@@ -129,6 +129,7 @@ namespace AssemblyCSharp
 
 		public void destroySelf()
 		{
+			makeExplosion ();
 			HiveMind.Instance.removeDrone(this); // remove drone from hivemind
 			Destroy(this.gameObject);            // delete self
 		}

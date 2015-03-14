@@ -69,7 +69,7 @@ public class Player : MonoBehaviour {
 			gameObject.transform.Rotate(Vector3.up * Time.deltaTime, Space.World);
 			StartCoroutine(MyCoroutine());
 		} else {
-			incRage((int)(rageMult*rageIncOnHit));
+			incRage(rageIncOnHit);
 			audio.PlayOneShot(getHitNoise, 0.7F);
 		}
 	}
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour {
 		EventHandler.Instance.gameOverExplosion ();
 		print("Waiting");
         yield return new WaitForSeconds(7);
-		Application.OpenURL ("http://goo.gl/forms/UM2v06UOhE"); // open url at end of game
+		//Application.OpenURL ("http://goo.gl/forms/UM2v06UOhE"); // open url at end of game
 		Application.LoadLevel("menuScene");
 		print("Waited");
 
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour {
 	}
 	
 	public void incRage(int rage){
-		this.rage += (int)(rage);
+		this.rage += (int)(rage * rageMult);
 		rageNumber.text = this.rage.ToString();
 	}
 	

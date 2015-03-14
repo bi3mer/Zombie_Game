@@ -6,7 +6,7 @@ public class Drone_SpawnBoss : DroneAbstract {
 	public int attackRange;
 	public int attack;
 
-	private int hits = 30;
+	private int hits = 900;
 	/*
 	 * This will need to be altered a bit, to not find the gameobjects with tag.
 	 */
@@ -68,7 +68,7 @@ public class Drone_SpawnBoss : DroneAbstract {
 	public override void getDamage(int damage)
 	{
 		hits--;
-		if(hits%10 == 0)
+		if(hits%300 == 0)
 		{
 			// spawn wave as a boss mechanic!
 			StartCoroutine(EventHandler.Instance.spawnWaves ());
