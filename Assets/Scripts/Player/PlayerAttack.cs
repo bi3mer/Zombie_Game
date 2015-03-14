@@ -10,6 +10,7 @@ public class PlayerAttack : MonoBehaviour {
 	public Collider col;
 	
 	public int button = 0;
+	public int controller = 0;
 	
 	public AudioClip zombieNoise;
 	
@@ -20,7 +21,7 @@ public class PlayerAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(button)) {
+		if (Input.GetMouseButtonDown(button) || Input.GetAxis("XFire1") == controller) {
 			anim.SetTrigger("armHit");
 			audio.PlayOneShot(zombieNoise, 1.0F);
 		}
@@ -36,7 +37,7 @@ public class PlayerAttack : MonoBehaviour {
 
 	// If the arms collide with something than deal damage and play the sounds effect.
 	void OnCollisionEnter(Collision collider){
-		//print(collider.gameObject.name);
+		print(collider.gameObject.name);
 		if(collider.gameObject.CompareTag("enemy")){
 			GameObject enemy = collider.gameObject;
 			DealDamage(enemy);
