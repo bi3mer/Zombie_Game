@@ -10,7 +10,7 @@ public class Store : MonoBehaviour {
  
 	//public Audioclip sound; 
 	public int cost = 10;
- 
+
 	public GameObject player;
 	Player PlayerVars;
  
@@ -55,7 +55,7 @@ public class Store : MonoBehaviour {
 	}
 
 	void OnMouseOver(){
-		if (Input.GetAxis("XFire1") == 1 || Input.GetAxis("XFire1") == 1)
+		if (Input.GetAxis("XFire1") == -1 || Input.GetAxis("XFire1") == 1)
 			this.purchace();
 	}
 	
