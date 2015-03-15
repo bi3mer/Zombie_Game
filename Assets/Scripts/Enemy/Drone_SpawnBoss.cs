@@ -20,7 +20,7 @@ public class Drone_SpawnBoss : DroneAbstract {
 		// Create drone charecteristics
 		attackRange += Random.Range (10,20);
 		searchRange += Random.Range (15, 30);
-		moveSpeed 	+= Random.Range (2, 10);
+		moveSpeed 	+= Random.Range (10, 15);
 		attack      += Random.Range (5,15);
 		
 		// multiply values based on waves for balancing
@@ -76,6 +76,7 @@ public class Drone_SpawnBoss : DroneAbstract {
 
 		if(hits == 0)
 		{
+			this.player.gameObject.GetComponent<Player> ().incRage (100);
 			this.destroySelf();
 		}
 	}

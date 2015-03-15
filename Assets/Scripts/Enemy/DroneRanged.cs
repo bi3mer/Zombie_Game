@@ -17,7 +17,7 @@ public class DroneRanged : DroneAbstract {
 		attackRange += Random.Range (20, 30);
 		searchRange += Random.Range (5, 10);
 		health 		+= Random.Range (20, 30); // increase scale of model based on health?
-		moveSpeed 	+= Random.Range (5, 15);
+		moveSpeed 	+= Random.Range (10, 15);
 		attack      += Random.Range (3, 8);
 
 		// multiply values based on waves for balancing

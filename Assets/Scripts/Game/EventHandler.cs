@@ -22,6 +22,7 @@ public class EventHandler : MonoBehaviour{
 	public GameObject bossExplosion;
 	public GameObject Center;
 	public GameObject DeathPosition;
+	public Terrain terrain;
 
 	private bool found;
 	private static int wave;
@@ -46,7 +47,7 @@ public class EventHandler : MonoBehaviour{
 	public void init(){
 		found = false;
 		multiplyNum = 3;;
-		wave = 4; // bosswave!!
+		wave = 0; // bosswave!!
 		timeBetweenWaves = 15;
 		droneCount = 0;
 	}
