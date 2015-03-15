@@ -47,7 +47,7 @@ public class EventHandler : MonoBehaviour{
 	public void init(){
 		found = false;
 		multiplyNum = 3;;
-		wave = 0; // bosswave!!
+		wave = 4; // bosswave!!
 		timeBetweenWaves = 15;
 		droneCount = 0;
 	}

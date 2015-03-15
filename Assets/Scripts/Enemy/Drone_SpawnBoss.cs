@@ -80,4 +80,12 @@ public class Drone_SpawnBoss : DroneAbstract {
 			this.destroySelf();
 		}
 	}
+
+	void OnCollisionEnter (Collision col)
+	{
+		if(col.gameObject.tag == "player")
+		{
+			col.gameObject.rigidbody.AddExplosionForce(100.0f,transform.position,5.0f,3.0f);
+		}
+	}
 }
