@@ -37,6 +37,7 @@ public class PickUps : MonoBehaviour {
 	}
 	
 	void Update () {
+	
         transform.Rotate (0,50*Time.deltaTime,0);
 		if(transform.position == pos1) {
 			moveTo = pos2;
@@ -56,11 +57,20 @@ public class PickUps : MonoBehaviour {
 		}
 	}
 	
+	void OnMouseOver(){
+		if (Input.GetAxis("XFire1") == -1 || Input.GetAxis("XFire1") == 1)
+			this.collect();
+	}
+	
 	void OnMouseExit() {
 		cRenderer.material = startcolor;
 	}
 	
 	void OnMouseDown(){
+		this.collect();
+	}
+	
+	void collect(){
 		if (inRange){
 			playerVars.setText(inText);
 			playerVars.activateColWin();

@@ -16,7 +16,7 @@ public class CollectorManager : MonoBehaviour {
 	public void decrementCount(){
 		count--;
 		if (count <= 0){
-			playerVars.incRage(500);
+			playerVars.incRage(1000);
 		}
 	}
 }
