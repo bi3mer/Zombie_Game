@@ -25,6 +25,7 @@ public class Player : MonoBehaviour {
 	public int damage = 10;
 	public GameObject Larm;
 	public GameObject Rarm;
+	public GameObject collectWin;
 	
 	private RigidbodyFPS controller;
 	private PlayerAttack attack1;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour {
 	public Text healthNumber;
 	public Text rageNumber;
 	public Text waveNumber;
+	public Text collectText;
 
 	void Awake() {
 		transform = gameObject.GetComponent<Transform>();
@@ -67,14 +69,14 @@ public class Player : MonoBehaviour {
 		if (curHealth <= 0){
 			audio.PlayOneShot(deathNoise, 0.7F);
 			gameObject.transform.Rotate(Vector3.up * Time.deltaTime, Space.World);
-			StartCoroutine(MyCoroutine());
+			StartCoroutine(Die());
 		} else {
 			incRage(rageIncOnHit);
 			audio.PlayOneShot(getHitNoise, 0.7F);
 		}
 	}
 	
-	IEnumerator MyCoroutine()
+	IEnumerator Die()
     {
 		Camera.main.gameObject.transform.position = Vector3.Lerp (Camera.main.gameObject.transform.position, EventHandler.Instance.DeathPosition.transform.position,5.0f);
 		GetComponent<MouseLook> ().enabled = false;
@@ -145,6 +147,21 @@ public class Player : MonoBehaviour {
 		attack1.setStrength(attack1.getStrength() + 1);
 		attack2.setStrength(attack2.getStrength() + 1);
 		print("Strength: " + attack1.getStrength());
+	}
+	
+	// === Collect Script === 
+	public void setText(string str){
+		collectText.text = str;
+	}
+	
+	public void activateColWin(){
+		StartCoroutine(Collected());
+	}
+	
+	IEnumerator Collected() {
+		collectWin.SetActive(true);
+		yield return new WaitForSeconds(10);
+		collectWin.SetActive(false);
 	}
 	
 	// === Player Speed ===
