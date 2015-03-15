@@ -52,7 +52,7 @@ public class Player : MonoBehaviour {
 		rage = 100;
 		healthNumber.text = maxHealth.ToString();
 		rageNumber.text = rage.ToString();
-		//waveNumber.text = EventHandler.Instance.getWave().ToString();
+		waveNumber.text = EventHandler.Instance.getWave().ToString();
 	}
 
 	// Update is called once per frame
@@ -78,20 +78,20 @@ public class Player : MonoBehaviour {
 	
 	IEnumerator Die()
     {
+		/*
 		Camera.main.gameObject.transform.position = Vector3.Lerp (Camera.main.gameObject.transform.position, EventHandler.Instance.DeathPosition.transform.position,5.0f);
 		GetComponent<MouseLook> ().enabled = false;
 		GetComponent<RigidbodyFPS> ().enabled = false;
 		Camera.main.transform.LookAt(EventHandler.Instance.Center.transform);
 		this.rigidbody.useGravity = false;
+		*/
+		EventHandler.Instance.deathCamera.enabled = true;
 		HiveMind.Instance.destroyAll ();
 		yield return new WaitForSeconds (3);
 		EventHandler.Instance.gameOverExplosion ();
-		print("Waiting");
         yield return new WaitForSeconds(7);
 		//Application.OpenURL ("http://goo.gl/forms/UM2v06UOhE"); // open url at end of game
 		Application.LoadLevel("menuScene");
-		print("Waited");
-
     }
 
 	// === RAGE ===
@@ -136,21 +136,23 @@ public class Player : MonoBehaviour {
 		return stamina;
 	}
 	
-	public void incStamina(){
+	public void incStamina()
+	{
 		this.stamina++;
 		this.setHealth (curHealth + 10);
 		this.maxHealth += 10;
 	}
 
 	// === Player Strength ===
-	public void incStrength(){
+	public void incStrength()
+	{
 		attack1.setStrength(attack1.getStrength() + 1);
 		attack2.setStrength(attack2.getStrength() + 1);
-		print("Strength: " + attack1.getStrength());
 	}
 	
 	// === Collect Script === 
-	public void setText(string str){
+	public void setText(string str)
+	{
 		collectText.text = str;
 	}
 	
@@ -158,27 +160,32 @@ public class Player : MonoBehaviour {
 		StartCoroutine(Collected());
 	}
 	
-	IEnumerator Collected() {
+	IEnumerator Collected() 
+	{
 		collectWin.SetActive(true);
 		yield return new WaitForSeconds(10);
 		collectWin.SetActive(false);
 	}
 	
 	// === Player Speed ===
-	public int getSpeed(){
+	public int getSpeed()
+	{
 		return speed;
 	}
 	
-	public void incSpeed(){
+	public void incSpeed()
+	{
 		this.speed ++;
 		this.jump += .2f;
 		controller.runSpeed = this.speed;
 		controller.runBackwardSpeed = this.speed;
 		controller.runSidestepSpeed = this.speed;
 		controller.jumpHeight = this.jump;
-		print ("Speed: " + this.speed);
-		print ("Jump: " + this.jump);
 	}
-	
+
+	public void updateWave()
+	{
+		waveNumber.text = EventHandler.Instance.getWave().ToString();
+	}
 	//public void finishWave();
 }
