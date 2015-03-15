@@ -21,7 +21,7 @@ public class DroneMelee : DroneAbstract
 		attackRange += Random.Range (3,5);
 		searchRange += Random.Range (10, 15);
 		health 		+= Random.Range (40, 50); // increase scale of model based on health?
-		moveSpeed 	+= Random.Range (2, 10);
+		moveSpeed 	+= Random.Range (9, 10);
 		attack      += Random.Range (2, 5);
 
 		// multiply values based on waves for balancing

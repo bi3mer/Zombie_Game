@@ -16,6 +16,7 @@ namespace AssemblyCSharp
 		protected Vector3 bulletSpawn;
 
 		private Vector3 previousPos;
+		private static float terrainLeft, terrainRight, terrainTop, terrainBottom, terrainWidth, terrainLength;
 
 		public void addToHive()
 		{
@@ -45,7 +46,7 @@ namespace AssemblyCSharp
 		}
 
 		public void checkPos()
-		{
+		{	
 			if(  (   previousPos.x > this.transform.position.x - 3 && previousPos.x < this.transform.position.x + 3
 			      && previousPos.y > this.transform.position.y - 3 && previousPos.y < this.transform.position.y + 3
 			      && previousPos.z > this.transform.position.z - 3 && previousPos.z < this.transform.position.z + 3)
@@ -59,10 +60,21 @@ namespace AssemblyCSharp
 
 		public void generateNewTarget()
 		{
-			int walkRadius = 200;
-			Vector3 randomDirection = Random.insideUnitSphere * walkRadius;// will need to be changed
+			Terrain terrain = EventHandler.Instance.terrain;;
+			terrainLeft = terrain.transform.position.x;
+			terrainBottom = terrain.transform.position.z;
+			terrainWidth = terrain.terrainData.size.x;
+			terrainLength = terrain.terrainData.size.z;
+			terrainRight = terrainLeft + terrainWidth;
+			terrainTop = terrainBottom + terrainLength;
+
+			float randX, randZ;
+			randX = Random.Range (terrainLeft, terrainRight);
+			randZ = Random.Range (terrainBottom, terrainTop);
+
+			Vector3 randomDirection = new Vector3 (randX,10,randZ); // 10 is erroneous
 			NavMeshHit hit;
-			NavMesh.SamplePosition (randomDirection, out hit, walkRadius, 1);
+			NavMesh.SamplePosition (randomDirection, out hit, 500, 1);
 			Vector3 finalPosition = hit.position;
 			target = finalPosition;
 		}
@@ -70,6 +82,10 @@ namespace AssemblyCSharp
 
 		public void moveRandomDirection()
 		{
+			if(transform.position.x < 20 && transform.position.z < 20)
+			{
+				generateCenterTarget();
+			}
 			if(   target.x > transform.position.x - walkStop && target.x < transform.position.x + walkStop
 			   && target.y > transform.position.y - walkStop && target.y < transform.position.y + walkStop
 			   && target.z > transform.position.z - walkStop && target.z < transform.position.z + walkStop)
@@ -94,6 +110,15 @@ namespace AssemblyCSharp
 			
 		}
 
+		public void generateCenterTarget()
+		{
+			Vector3 position = new Vector3 (EventHandler.Instance.spawners [2].transform.position.x, 10, EventHandler.instance.spawners [2].transform.position.z);
+			NavMeshHit hit;
+			NavMesh.SamplePosition (position, out hit, 500, 1);
+			Vector3 finalPosition = hit.position;
+			target = finalPosition;
+		}
+
 		public void moveTowardsPlayer()
 		{
 			moveTowards (player);
@@ -105,7 +130,6 @@ namespace AssemblyCSharp
 			this.health -= dmg;
 			if(health <= 0) // check if killed
 			{
-				makeExplosion();
 				destroySelf();
 			}
 		}
