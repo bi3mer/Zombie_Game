@@ -155,13 +155,13 @@ public class Player : MonoBehaviour {
 	}
 	
 	public void activateColWin(){
-		collectWin.SetActive(true);
 		StartCoroutine(Collected());
-		collectWin.SetActive(true);
 	}
 	
 	IEnumerator Collected() {
-		
+		collectWin.SetActive(true);
+		yield return new WaitForSeconds(10);
+		collectWin.SetActive(false);
 	}
 	
 	// === Player Speed ===
