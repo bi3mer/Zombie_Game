@@ -16,12 +16,12 @@ public class DroneRanged : DroneAbstract {
 		// Create drone charecteristics
 		attackRange += Random.Range (20, 30);
 		searchRange += Random.Range (5, 10);
-		health 		+= Random.Range (20, 30); // increase scale of model based on health?
+		health 		+= Random.Range (100, 150); // increase scale of model based on health?
 		moveSpeed 	+= Random.Range (10, 15);
 		attack      += Random.Range (3, 8);
 
 		// multiply values based on waves for balancing
-		health 		+= (health      * EventHandler.Instance.getWave() / 5);  //magic numbers in here for now. will balance later
+		health 		+= (health      * EventHandler.Instance.getWave() / 2);  //magic numbers in here for now. will balance later
 		moveSpeed   += (moveSpeed + (EventHandler.Instance.getWave () / 10));
 		//attack      += (attack 		+ (EventHandler.Instance.getWave()/10));
 

@@ -23,6 +23,7 @@ public class EventHandler : MonoBehaviour{
 	public GameObject Center;
 	public GameObject DeathPosition;
 	public Terrain terrain;
+	public Camera deathCamera;
 
 	private bool found;
 	private static int wave;
@@ -47,7 +48,7 @@ public class EventHandler : MonoBehaviour{
 	public void init(){
 		found = false;
 		multiplyNum = 3;;
-		wave = 4; // bosswave!!
+		wave = 0; // bosswave!!
 		timeBetweenWaves = 15;
 		droneCount = 0;
 	}
@@ -61,6 +62,7 @@ public class EventHandler : MonoBehaviour{
 	public IEnumerator  spawnWaves()
 	{
 		wave++;
+		Player.transform.gameObject.GetComponent<Player> ().updateWave ();
 		if(wave % 5 == 0) // spawn bosses every 10 waves
 		{
 			this.spawnBoss();

@@ -67,6 +67,7 @@ public class Drone_SpawnBoss : DroneAbstract {
 
 	public override void getDamage(int damage)
 	{
+		//print ("here");
 		hits--;
 		if(hits%300 == 0)
 		{

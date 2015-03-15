@@ -20,12 +20,12 @@ public class DroneMelee : DroneAbstract
 		// Create drone charecteristics
 		attackRange += Random.Range (3,5);
 		searchRange += Random.Range (10, 15);
-		health 		+= Random.Range (40, 50); // increase scale of model based on health?
+		health 		+= Random.Range (150, 200); // increase scale of model based on health?
 		moveSpeed 	+= Random.Range (9, 10);
 		attack      += Random.Range (2, 5);
 
 		// multiply values based on waves for balancing
-		health 		+= (health      * EventHandler.Instance.getWave() / 5);  //magic numbers in here for now. will balance later
+		health 		+= (health      * EventHandler.Instance.getWave() / 2);  //magic numbers in here for now. will balance later
 		moveSpeed   += (moveSpeed + (EventHandler.Instance.getWave () / 10));
 		//attack      += (attack 		+ (EventHandler.Instance.getWave()/10));
 

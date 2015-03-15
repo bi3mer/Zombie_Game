@@ -6,7 +6,7 @@ public class DronePush : DroneAbstract {
 	// Use this for initialization
 	void Start () {
 		searchRange += Random.Range (5, 10);
-		health 		+= Random.Range (100,200); // push drones will always have more health than the average drone out there
+		health 		+= Random.Range (200,300); // push drones will always have more health than the average drone out there
 		moveSpeed 	+= Random.Range (10, 12);
 
 		// multiply values based on waves for balancing
