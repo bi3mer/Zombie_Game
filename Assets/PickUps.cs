@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+using UnityEngine.UI; 	
 
 public class PickUps : MonoBehaviour {
 
@@ -8,8 +8,10 @@ public class PickUps : MonoBehaviour {
 	public Material hovercolor;
 
 	MeshRenderer cRenderer;
+	private GameObject manager;
 	public GameObject player;
 	Player playerVars;
+	CollectorManager ColMan;
 
 	public Text text;
 	
@@ -27,6 +29,8 @@ public class PickUps : MonoBehaviour {
 	void Start () {
 		playerVars = player.GetComponent<Player>();		
 		cRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+		manager = this.transform.parent.gameObject;
+		ColMan = manager.GetComponentInChildren<CollectorManager>();
 		offset = Vector3.down;
 		pos1 = transform.position;
 		pos2 = transform.position + offset;
@@ -60,6 +64,7 @@ public class PickUps : MonoBehaviour {
 		if (inRange){
 			playerVars.setText(inText);
 			playerVars.activateColWin();
+			ColMan.decrementCount();
 			gameObject.SetActive(false);
 		}
 	}

@@ -3,13 +3,20 @@ using System.Collections;
 
 public class CollectorManager : MonoBehaviour {
 
+	private int count;
+	public GameObject player;
+	Player playerVars;
+
 	// Use this for initialization
 	void Start () {
-	
+		playerVars = player.GetComponent<Player>();	
+		count = transform.childCount;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public void decrementCount(){
+		count--;
+		if (count <= 0){
+			playerVars.incRage(500);
+		}
 	}
 }
