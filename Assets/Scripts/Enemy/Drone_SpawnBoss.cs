@@ -18,7 +18,7 @@ public class Drone_SpawnBoss : DroneAbstract {
 		this.GetComponent<NavMeshAgent> ().enabled = false; // Don't find path till necessary
 		
 		// Create drone charecteristics
-		attackRange += Random.Range (10,20);
+		attackRange += Random.Range (40,50);
 		searchRange += Random.Range (15, 30);
 		moveSpeed 	+= Random.Range (10, 15);
 		attack      += Random.Range (5,15);

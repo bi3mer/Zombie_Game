@@ -1,12 +1,26 @@
 fileFormatVersion: 2
-guid: 46eff692d9bc4fd4a9a13fb9fa4ed122
+guid: 7ab6286c5939b444980bc812cf76e88d
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
-    100002: polySurface6
+    100002: place3dTexture3
+    100004: place3dTexture4
+    100006: place3dTexture5
+    100008: place3dTexture6
+    100010: place3dTexture7
+    100012: place3dTexture8
+    100014: place3dTexture9
+    100016: polySurface6
     400000: //RootNode
-    400002: polySurface6
+    400002: place3dTexture3
+    400004: place3dTexture4
+    400006: place3dTexture5
+    400008: place3dTexture6
+    400010: place3dTexture7
+    400012: place3dTexture8
+    400014: place3dTexture9
+    400016: polySurface6
     2300000: polySurface6
     3300000: polySurface6
     4300000: polySurface6

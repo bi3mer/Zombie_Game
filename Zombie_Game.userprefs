@@ -1,10 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LightFlicker.cs">
     <Files>
-      <File FileName="Assets\Scripts\Enemy\Drone_SpawnBoss.cs" Line="70" Column="5" />
-      <File FileName="Assets\Scripts\Game\EventHandler.cs" Line="26" Column="28" />
-      <File FileName="Assets\Scripts\Enemy\DroneRanged.cs" Line="24" Column="65" />
+      <File FileName="Assets\Scripts\LightFlicker.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy\Drone_SpawnBoss.cs" Line="21" Column="37" />
+      <File FileName="Assets\Scripts\Game\EventHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy\DroneRanged.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemy\EnemyNavigation.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemy\DroneAbstract.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enemy\DronePush.cs" Line="1" Column="1" />
@@ -12,11 +13,9 @@
       <File FileName="Assets\Scripts\Game\HiveMind.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GUI\Restarter.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GUI\SceneSwitcher.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\Player.cs" Line="88" Column="36" />
-      <File FileName="Temp\ParsedCombinations-Normal-BumpSpec.shader" Line="1" Column="1" />
-      <File FileName="Temp\Compiled-Normal-BumpSpec-.shader" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Game\Store.cs" Line="1" Column="1" />
-      <File FileName="Assets\disable.cs" Line="8" Column="31" />
+      <File FileName="Assets\disable.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
